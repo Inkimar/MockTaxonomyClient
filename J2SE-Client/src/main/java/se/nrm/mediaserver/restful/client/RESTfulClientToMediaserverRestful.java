@@ -34,7 +34,7 @@ public class RESTfulClientToMediaserverRestful {
 
         Media media = new Image();
 
-        media.setFilename("21aug-19:00.jpg");
+        media.setFilename("21aug-19:48.jpg");
         media.setOwner("inki");
         media.setVisibility("public");
         System.out.println("Media:Image " + media);
