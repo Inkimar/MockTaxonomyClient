@@ -30,19 +30,19 @@ public class UploadFileService {
     public Response uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail,
-            @FormDataParam("owner") String owner
-            ) {
+            @FormDataParam("owner") String owner,
+            @FormDataParam("access") String access) {
 
         final String uuIdFilename = UUID.randomUUID().toString();
 
-        String uploadedFileLocation = "/opt/data/nf/vffmedia/" + uuIdFilename;
+        String uploadedFileLocation = absolutePathToFile(uuIdFilename);
         writeToFile(uploadedInputStream, uploadedFileLocation);
 
         Media media = new Image();
         media.setUuid(uuIdFilename);
         media.setFilename(fileDetail.getFileName());
         media.setOwner(owner);
-        media.setVisibility("public");
+        media.setVisibility(access);
         writeToDatabase(media);
 
         String responseOutput = "File uploaded to : " + uploadedFileLocation;
@@ -51,6 +51,7 @@ public class UploadFileService {
 
     }
 
+    //@TODO, check filelocation
     private void writeToFile(InputStream uploadedInputStream,
             String uploadedFileLocation) {
 
@@ -67,9 +68,19 @@ public class UploadFileService {
             out.flush();
             out.close();
         } catch (IOException e) {
-
             e.printStackTrace();
         }
+    }
+
+    public String absolutePathToFile(String uuid) {
+        final String IMAGE_PATH = "/opt/data/nf/newmedia/";
+        StringBuilder tmpPath = new StringBuilder(IMAGE_PATH);
+        tmpPath.append(uuid.charAt(0)).append("/").append(uuid.charAt(1)).append("/").append(uuid.charAt(2)).append("/");
+        String pathen = tmpPath.toString();
+        File directory = new File(pathen);
+        
+        boolean mkdirs = directory.mkdirs();
+        return pathen.concat(uuid);
     }
 
     private void writeToDatabase(Media media) {
