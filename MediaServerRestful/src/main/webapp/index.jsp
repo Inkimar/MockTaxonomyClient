@@ -9,11 +9,11 @@
         <meta name="viewport" content="width=device-width">
     </head>
     <body>
-        <h1>File Upload </h1>
+        <h1>File Upload kl 13:05 </h1>
         <form action="resources/file/upload" method="post" enctype="multipart/form-data">
             <p>
                 Select a file : <input type="file" name="file" /> <br/>
-                information : <input type="text" name="information" value="abc" />
+                Owner : <input type="text" name="owner" value="abc" />
             </p>
             <input type="submit" value="Upload It" />
         </form>

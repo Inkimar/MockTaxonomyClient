@@ -14,9 +14,15 @@ import javax.ws.rs.core.Response;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import java.util.UUID;
+import se.nrm.mediaserver.media3.domain.Image;
+import se.nrm.mediaserver.media3.domain.Media;
+import se.nrm.mediaserver.service.MediaService;
+import se.nrm.mediaserver.util.JNDIFetchRemote;
 
 @Path("/file")
 public class UploadFileService {
+
+    MediaService bean = JNDIFetchRemote.outreach();
 
     @POST
     @Path("/upload")
@@ -24,13 +30,20 @@ public class UploadFileService {
     public Response uploadFile(
             @FormDataParam("file") InputStream uploadedInputStream,
             @FormDataParam("file") FormDataContentDisposition fileDetail,
-            @FormDataParam("information") String info
+            @FormDataParam("owner") String owner
             ) {
 
-        String uuIdFilename = UUID.randomUUID().toString();
-        String uploadedFileLocation = "/opt/data/nf/vffmedia/" + uuIdFilename;
+        final String uuIdFilename = UUID.randomUUID().toString();
 
+        String uploadedFileLocation = "/opt/data/nf/vffmedia/" + uuIdFilename;
         writeToFile(uploadedInputStream, uploadedFileLocation);
+
+        Media media = new Image();
+        media.setUuid(uuIdFilename);
+        media.setFilename(fileDetail.getFileName());
+        media.setOwner(owner);
+        media.setVisibility("public");
+        writeToDatabase(media);
 
         String responseOutput = "File uploaded to : " + uploadedFileLocation;
 
@@ -57,5 +70,12 @@ public class UploadFileService {
 
             e.printStackTrace();
         }
+    }
+
+    private void writeToDatabase(Media media) {
+        String serverDate = bean.getServerDate();
+        System.out.println("Media is -> " + media);
+        System.out.println("Serverdate -> " + serverDate);
+        bean.save(media);
     }
 }
