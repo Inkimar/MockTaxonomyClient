@@ -42,10 +42,10 @@ public class UploadFileService {
         String uploadedFileLocation = absolutePathToFile(uuIdFilename);
         writeToFile(uploadedInputStream, uploadedFileLocation);
 
-        File f = new File(uploadedFileLocation);
+        File fileHandle = new File(uploadedFileLocation);
         String mimeType ="unkown" ;
         try {
-           mimeType = MimeParser.getMimeFromFileContentAndExtension(f, uuIdFilename);
+           mimeType = MimeParser.getMimeFromFileContentAndExtension(fileHandle, uuIdFilename);
 
         } catch (IOException ioEx) {
             Logger.getLogger(UploadFileService.class.getName()).log(Level.SEVERE, null, ioEx);
@@ -57,6 +57,7 @@ public class UploadFileService {
         media.setMimetype(mimeType);
         media.setOwner(owner);
         media.setVisibility(access);
+        
         writeToDatabase(media);
 
         String responseOutput = "File uploaded to : " + uploadedFileLocation;
