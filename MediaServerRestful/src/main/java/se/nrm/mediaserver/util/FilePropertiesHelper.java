@@ -27,20 +27,6 @@ public class FilePropertiesHelper {
         return filePath;
     }
 
-
-//    private static String getDetailedFormattedDate() {
-//        Date date = new Date();
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-//        String formattedDate = format.format(date);
-//        return formattedDate;
-//    }
-//    private static String getDate() {
-//        Date date = new Date();
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-//        String formattedDate = format.format(date);
-//        return formattedDate;
-//    }
-
     private static InputStream getInputStream() {
         InputStream iStream =
                 FilePropertiesHelper.class.getClassLoader().getResourceAsStream("config.properties");
