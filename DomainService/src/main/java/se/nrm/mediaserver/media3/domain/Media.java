@@ -43,8 +43,8 @@ public abstract class Media implements Serializable {
 //    @Embedded
 //    private MediaText mediaText;
     public Media() {
-        String tmpUUID = UUID.randomUUID().toString();
-        this.uuid = tmpUUID;
+//        String tmpUUID = UUID.randomUUID().toString();
+//        this.uuid = tmpUUID;
     }
 
     public String getUuid() {
@@ -86,9 +86,13 @@ public abstract class Media implements Serializable {
     public void setMimetype(String mimetype) {
         this.mimetype = mimetype;
     }
+    
+    public String getTest(){
+        return "testing";
+    }
 
     @Override
     public String toString() {
-        return "Media-class " + this.getFilename();
+        return "Media-class " + this.getFilename() +" "+this.getUuid();
     }
 }

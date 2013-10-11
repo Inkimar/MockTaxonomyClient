@@ -17,6 +17,7 @@ import java.util.UUID;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
 import se.nrm.mediaserver.service.MediaService;
+import se.nrm.mediaserver.util.FilePropertiesHelper;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 
 @Path("/file")
@@ -51,7 +52,7 @@ public class UploadFileService {
 
     }
 
-    //@TODO, check filelocation
+    //@TODO, check filelocation, nio?S
     private void writeToFile(InputStream uploadedInputStream,
             String uploadedFileLocation) {
 
@@ -73,13 +74,16 @@ public class UploadFileService {
     }
 
     public String absolutePathToFile(String uuid) {
-        final String IMAGE_PATH = "/opt/data/nf/newmedia/";
+      // final String IMAGE_PATH = "/opt/data/nf/newmedia/";
+       String IMAGE_PATH = FilePropertiesHelper.getImagesFilePath();
+        
+        
         StringBuilder tmpPath = new StringBuilder(IMAGE_PATH);
         tmpPath.append(uuid.charAt(0)).append("/").append(uuid.charAt(1)).append("/").append(uuid.charAt(2)).append("/");
         String pathen = tmpPath.toString();
         File directory = new File(pathen);
         
-        boolean mkdirs = directory.mkdirs();
+        boolean isDir = directory.mkdirs();
         return pathen.concat(uuid);
     }
 

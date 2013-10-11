@@ -6,6 +6,7 @@
 *.ear
 
 # target directories #
+
 /Domain/target/
 /Domain/nbproject/private/
 /J2SE-Client/target/

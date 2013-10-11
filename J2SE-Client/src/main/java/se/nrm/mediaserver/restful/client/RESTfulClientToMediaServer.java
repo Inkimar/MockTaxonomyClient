@@ -2,7 +2,8 @@ package se.nrm.mediaserver.restful.client;
 
 import com.sun.jersey.api.client.UniformInterfaceException;
 import com.sun.jersey.api.client.WebResource;
-import se.nrm.mediaserver.media3.domain.*;
+import se.nrm.mediaserver.media3.domain.Image;
+import se.nrm.mediaserver.media3.domain.Media;
 import se.nrm.mediaserver.restful.util.RestfulImage;
 import se.nrm.mediaserver.restful.util.URI;
 
@@ -10,6 +11,8 @@ import se.nrm.mediaserver.restful.util.URI;
  * When running the server = 'MediaServer' - The MediaServer-Project is
  * old-School ( Using web.xml )
  *
+ * Check the ip-address in the MediaServerRestful
+ * 
  * @author ingimar
  */
 public class RESTfulClientToMediaServer {
@@ -31,10 +34,12 @@ public class RESTfulClientToMediaServer {
 
         Media media = new Image();
 
-        media.setFilename("20aug-16:26.jpg");
+        media.setFilename("8okt-10:24.jpg");
         media.setOwner("inki");
         media.setVisibility("public");
         System.out.println("Media:Image " + media);
         restful.create_XML(media);
+        
+        System.out.println("done");
     }
 }
