@@ -74,7 +74,6 @@ public class UploadFileService {
     }
 
     public String absolutePathToFile(String uuid) {
-      // final String IMAGE_PATH = "/opt/data/nf/newmedia/";
        String IMAGE_PATH = FilePropertiesHelper.getImagesFilePath();
         
         
