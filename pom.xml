@@ -25,7 +25,8 @@
         <module>MediaserverApp-web</module>
         <module>MediaserverApp-ejb</module>
         <module>J2SE-Client</module>
-        <module>Domain</module>
+        <module>Client</module>
+        <!--<module>Domain</module>-->
         <module>MediaserverRemote-web</module>
         <module>MediaServerRestful</module>
     </modules>

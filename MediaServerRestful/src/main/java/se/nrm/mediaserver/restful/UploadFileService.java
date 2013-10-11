@@ -51,6 +51,7 @@ public class UploadFileService {
             Logger.getLogger(UploadFileService.class.getName()).log(Level.SEVERE, null, ioEx);
         }
 
+        // beroende vilken Media det är ...
         Media media = new Image();
         media.setUuid(uuIdFilename);
         media.setFilename(fileDetail.getFileName());
