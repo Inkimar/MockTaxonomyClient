@@ -14,11 +14,14 @@ import javax.ws.rs.core.Response;
 import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
 import se.nrm.mediaserver.service.MediaService;
 import se.nrm.mediaserver.util.FilePropertiesHelper;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
+import se.nrm.mediaserver.util.MimeParser;
 
 @Path("/file")
 public class UploadFileService {
@@ -39,9 +42,19 @@ public class UploadFileService {
         String uploadedFileLocation = absolutePathToFile(uuIdFilename);
         writeToFile(uploadedInputStream, uploadedFileLocation);
 
+        File f = new File(uploadedFileLocation);
+        String mimeType ="unkown" ;
+        try {
+           mimeType = MimeParser.getMimeFromFileContentAndExtension(f, uuIdFilename);
+
+        } catch (IOException ioEx) {
+            Logger.getLogger(UploadFileService.class.getName()).log(Level.SEVERE, null, ioEx);
+        }
+
         Media media = new Image();
         media.setUuid(uuIdFilename);
         media.setFilename(fileDetail.getFileName());
+        media.setMimetype(mimeType);
         media.setOwner(owner);
         media.setVisibility(access);
         writeToDatabase(media);
@@ -52,7 +65,7 @@ public class UploadFileService {
 
     }
 
-    //@TODO, check filelocation, nio?S
+    //@TODO, check filelocation, nio?
     private void writeToFile(InputStream uploadedInputStream,
             String uploadedFileLocation) {
 
@@ -70,18 +83,19 @@ public class UploadFileService {
             out.close();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally{
+            
         }
     }
 
     public String absolutePathToFile(String uuid) {
-       String IMAGE_PATH = FilePropertiesHelper.getImagesFilePath();
-        
-        
+        String IMAGE_PATH = FilePropertiesHelper.getImagesFilePath();
+
         StringBuilder tmpPath = new StringBuilder(IMAGE_PATH);
         tmpPath.append(uuid.charAt(0)).append("/").append(uuid.charAt(1)).append("/").append(uuid.charAt(2)).append("/");
         String pathen = tmpPath.toString();
         File directory = new File(pathen);
-        
+
         boolean isDir = directory.mkdirs();
         return pathen.concat(uuid);
     }
