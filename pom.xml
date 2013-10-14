@@ -29,5 +29,6 @@
         <!--<module>Domain</module>-->
         <module>MediaserverRemote-web</module>
         <module>MediaServerRestful</module>
+        <module>MediaServerResteasy</module>
     </modules>
 </project>
