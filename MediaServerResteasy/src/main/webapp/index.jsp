@@ -5,7 +5,7 @@
 <html>
     <body>
         <h1>JAX-RS File Upload Example</h1>
-        <form action="rest-ws/upload-file" method="post" enctype="multipart/form-data">
+        <form action="media/upload-file" method="post" enctype="multipart/form-data">
             <p>
                 File name : <input type="text" name="fileName" /> </br>
             </p>

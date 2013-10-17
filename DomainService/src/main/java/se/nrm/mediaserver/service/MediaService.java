@@ -12,8 +12,9 @@ import javax.ejb.Remote;
  * @param <T>
  */
 @Remote 
-public interface MediaService <T extends Object> {
+public interface MediaService<T extends Object> {
 
     void save(T media);
+    T get(String uuid);
     String getServerDate();
 }

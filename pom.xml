@@ -30,5 +30,5 @@
         <module>MediaserverRemote-web</module>
         <module>MediaServerRestful</module>
         <module>MediaServerResteasy</module>
-    </modules>
+  </modules>
 </project>

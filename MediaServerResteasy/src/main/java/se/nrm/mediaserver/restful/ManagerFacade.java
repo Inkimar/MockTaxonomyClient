@@ -12,8 +12,6 @@ package se.nrm.mediaserver.restful;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -29,7 +27,7 @@ import se.nrm.mediaserver.util.FilePropertiesHelper;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 import se.nrm.mediaserver.util.MimeParser;
 
-@Path("/rest-ws")
+@Path("/media")
 public class ManagerFacade {
 
     MediaService bean = JNDIFetchRemote.outreach();
@@ -65,13 +63,21 @@ public class ManagerFacade {
         writeToDatabase(media);
 
         String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
+        
+        dummy();
 
         return Response.status(200).entity(responseOutput).build();
     }
 
+    private void dummy() {
+        final String uuid = "e3e2e57f-67fe-4644-a995-0fe25db1e48a";
+        Image media = (Image) bean.get(uuid);
+        System.out.println("Image is " + media);
+    }
+
+    // bryt ut. egen klass
     public String absolutePathToFile(String uuid) {
         String IMAGE_PATH = FilePropertiesHelper.getImagesFilePath();
-        // String IMAGE_PATH =  "/opt/data/mediaserver/newmedia/";
 
         StringBuilder tmpPath = new StringBuilder(IMAGE_PATH);
         tmpPath.append(uuid.charAt(0)).append("/").append(uuid.charAt(1)).append("/").append(uuid.charAt(2)).append("/");
@@ -106,5 +112,6 @@ public class ManagerFacade {
         System.out.println("Media is -> " + media);
         System.out.println("Serverdate -> " + serverDate);
         bean.save(media);
+        // bean.insert(media);
     }
 }
