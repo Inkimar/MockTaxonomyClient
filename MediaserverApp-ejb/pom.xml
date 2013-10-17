@@ -29,7 +29,7 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
+            <version>6.0</version>
             <!-- to 7.0 when testing GF 4 -->
             <scope>provided</scope>
         </dependency>

@@ -9,7 +9,6 @@ import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
 public class FileUploadForm {
 
-    
     public FileUploadForm() {
     }
 
@@ -50,7 +49,7 @@ public class FileUploadForm {
     /**
      * @param owner the owner to set
      */
-     @FormParam("owner")
+    @FormParam("owner")
     public void setOwner(String owner) {
         this.owner = owner;
     }
@@ -65,7 +64,7 @@ public class FileUploadForm {
     /**
      * @param access the access to set
      */
-     @FormParam("access")
+    @FormParam("access")
     public void setAccess(String access) {
         this.access = access;
     }
