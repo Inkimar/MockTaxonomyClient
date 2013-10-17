@@ -26,13 +26,7 @@ public class MediaServiceBean implements Serializable, MediaService {
     public String getHtml(){
         return "<h2>Hello "+this.getClass().getCanonicalName()+" </h2>";
     }
-    
-    @Override
-    public String test() {
-        System.out.println("Metoden test");
-        String s = this.getClass().getCanonicalName();
-        return s;
-    }
+
 
     @Override
     public String getServerDate() {

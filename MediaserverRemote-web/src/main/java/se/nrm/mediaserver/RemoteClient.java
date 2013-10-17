@@ -50,12 +50,9 @@ public class RemoteClient extends HttpServlet {
             out.println("<h1>20Augusti- Testing at " + request.getContextPath() + "</h1>");
             MediaService bean = JNDIFetchRemote.outreach();
 
-            // Nedan kan jag se att det är rätt böna.
-            out.println("<h1>Testing at " + bean + "</h1>");
 
-            out.println("<h1>Testing at " + bean.test() + "</h1>");
-            Media media = this.get();
             out.println("<h1>Serverdate is  " + bean.getServerDate() + "</h1>");
+            Media media = this.get();
             out.println("<h1> kl 1540 Testing skriver ut Media -> . " + media + "</h1>");
             
             // Saves if EAR is deployed, saves if EJB is deployed - update JNDI-class

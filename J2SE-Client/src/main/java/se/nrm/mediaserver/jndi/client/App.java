@@ -23,7 +23,7 @@ public class App {
         System.out.println("Start 11:38: Hej världen!");
         try {
             MediaService bean = fetchBean();
-            System.out.println("Response coming from bean :->" + bean.test() + "<-");
+            System.out.println("Response coming from bean :->" + bean.getServerDate() + "<-");
         } catch (NamingException e) {
         }
         System.out.println("END: Hej världen!");

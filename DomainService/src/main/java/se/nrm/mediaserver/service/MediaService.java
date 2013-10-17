@@ -9,11 +9,11 @@ import javax.ejb.Remote;
 /**
  *
  * @author ingimar
+ * @param <T>
  */
 @Remote 
-public interface MediaService {
+public interface MediaService <T extends Object> {
 
-    void save(Object media);
-    String test();
+    void save(T media);
     String getServerDate();
 }
