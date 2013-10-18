@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package se.nrm.mediaserver.restful;
 
 /**
@@ -16,8 +11,11 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import se.nrm.mediaserver.media3.domain.Image;
@@ -63,16 +61,25 @@ public class ManagerFacade {
         writeToDatabase(media);
 
         String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
-        
-        dummy();
 
         return Response.status(200).entity(responseOutput).build();
     }
 
-    private void dummy() {
-        final String uuid = "e3e2e57f-67fe-4644-a995-0fe25db1e48a";
+    /**
+     * Exempelvis :
+     * http://localhost:8080/MediaServerResteasy/media/9ed8a73d-d075-467b-b2cd-cd32acfbe90e
+     * -Check the validity of the uuid
+     * @param uuid
+     * @return
+     */
+    @GET
+    @Path("{uuid}")
+    @Produces("text/plain")
+    public String getMetaData(@PathParam("uuid") String uuid) {
+       // check validity of uuid
         Image media = (Image) bean.get(uuid);
         System.out.println("Image is " + media);
+        return media.toString();
     }
 
     // bryt ut. egen klass
@@ -112,6 +119,5 @@ public class ManagerFacade {
         System.out.println("Media is -> " + media);
         System.out.println("Serverdate -> " + serverDate);
         bean.save(media);
-        // bean.insert(media);
     }
 }
