@@ -2,6 +2,7 @@ package se.nrm.mediaserver.beans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -9,6 +10,7 @@ import javax.persistence.Query;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.service.MediaService;
 
 /**
@@ -38,14 +40,18 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
 
     @Override
     public void save(T media) {
-        System.out.println("saving now: 12:50");
         em.merge(media);
+    }
+    
+    @Override
+    public void delete(String uuid) {
+       T fetchedEntity = get(uuid);
+       em.remove(fetchedEntity);
     }
 
     @Override
     public T get(String uuid) {
         T Image = null;
-        // final String fetch = "SELECT c FROM Media c  where c.uuid = :uuid";
         final String fetch = "SELECT c FROM Image c  where c.uuid = :uuid";
         Query createQuery = em.createQuery(fetch);
         createQuery.setParameter("uuid", uuid);
@@ -53,4 +59,15 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
 
         return Image;
     }
+
+    @Override
+    public List<Image> getAll() {
+        Query query = em.createNamedQuery(Image.FIND_ALL);
+        List<Image> images = query.getResultList();
+        return images;
+    }
+    
+    
+
+    
 }

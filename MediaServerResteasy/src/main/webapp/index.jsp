@@ -7,9 +7,6 @@
         <h1>JAX-RS File Upload Example</h1>
         <form action="media/upload-file" method="post" enctype="multipart/form-data">
             <p>
-                File name : <input type="text" name="fileName" /> </br>
-            </p>
-            <p>
                 Owner : <input type="text" name="owner" /></br>
             </p>
              <p>
