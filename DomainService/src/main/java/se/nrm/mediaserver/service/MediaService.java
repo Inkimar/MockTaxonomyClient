@@ -4,6 +4,7 @@
  */
 package se.nrm.mediaserver.service;
 
+import java.util.List;
 import javax.ejb.Remote;
 
 /**
@@ -15,6 +16,10 @@ import javax.ejb.Remote;
 public interface MediaService<T extends Object> {
 
     void save(T media);
+    void delete(String uuid); // might want the whole object
     T get(String uuid);
     String getServerDate();
+    List getAll();
+
+    public String getHtml();
 }

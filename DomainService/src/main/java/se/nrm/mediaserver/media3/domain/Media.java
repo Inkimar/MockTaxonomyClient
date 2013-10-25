@@ -3,16 +3,16 @@ package se.nrm.mediaserver.media3.domain;
 import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.UUID;
 
 /**
+ * Will wait to implement hashcode/equals. hascode and equals ...
+ * http://stackoverflow.com/questions/5031614/the-jpa-hashcode-equals-dilemma //
+ * http://michalorman.com/2012/07/do-not-override-equals-and-hashcode-for-entities/
  *
  * @author ingimar
  */
@@ -43,8 +43,25 @@ public abstract class Media implements Serializable {
 //    @Embedded
 //    private MediaText mediaText;
     public Media() {
-//        String tmpUUID = UUID.randomUUID().toString();
-//        this.uuid = tmpUUID;
+    }
+
+    public Media(String owner) {
+        this.owner = owner;
+    }
+
+    /**
+     * Testing with JSON from curl.
+     * 
+     * @param owner
+     * @param visibility
+     * @param filename
+     * @param mimetype 
+     */
+    public Media(String owner, String visibility, String filename, String mimetype) {
+        this.owner = owner;
+        this.visibility = visibility;
+        this.filename = filename;
+        this.mimetype = mimetype;
     }
 
     public String getUuid() {
@@ -86,13 +103,22 @@ public abstract class Media implements Serializable {
     public void setMimetype(String mimetype) {
         this.mimetype = mimetype;
     }
-    
-    public String getTest(){
+
+    public String getTest() {
         return "testing";
     }
 
     @Override
     public String toString() {
-        return "Media-class " + this.getFilename() +" "+this.getUuid();
+        final StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        sb.append("Media:");
+        sb.append(", uuid='").append(uuid).append('\'');
+        sb.append(", owner='").append(owner).append('\'');
+        sb.append(", visibility='").append(visibility).append('\'');
+        sb.append(", filename='").append(filename).append('\'');
+        sb.append(", mimetype='").append(mimetype).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 }
