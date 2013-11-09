@@ -29,9 +29,9 @@ import org.xml.sax.helpers.DefaultHandler;
  * @author ingimar
  */
 public class MimeParser {
-   
+
     //@TODO, should be able to set a filter on which mime-types should be allowed, from property file
-    public static String getMimeFromFileContentAndExtension(File file, String filename) throws FileNotFoundException, IOException  {
+    public static String getMimeFromFileContentAndExtension(File file, String filename) throws FileNotFoundException, IOException {
 
         AutoDetectParser parser = new AutoDetectParser();
         parser.setParsers(new HashMap<MediaType, Parser>());

@@ -28,8 +28,8 @@ public class FilePropertiesHelper {
     }
 
     private static InputStream getInputStream() {
-        InputStream iStream =
-                FilePropertiesHelper.class.getClassLoader().getResourceAsStream("config.properties");
+        InputStream iStream
+                = FilePropertiesHelper.class.getClassLoader().getResourceAsStream("config.properties");
         return iStream;
     }
 }

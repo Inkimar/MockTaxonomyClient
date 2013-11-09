@@ -5,6 +5,8 @@ package se.nrm.mediaserver.restful;
  * @author ingimar
  */
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -12,7 +14,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,6 +23,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.JAXBElement;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -33,8 +35,10 @@ import se.nrm.mediaserver.util.FilePropertiesHelper;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 import se.nrm.mediaserver.util.MimeParser;
 
+
 /**
- *
+ * Att hämta en bild, hårdkodad
+ * http://localhost:8080/MediaServerResteasy/media/bild/png
  * @author ingimar
  */
 @Path("/media")
@@ -90,7 +94,8 @@ public class MediaResourceService implements MediaResource {
         System.out.println("Bubble on");
         return Response.status(200).entity("hej").build();
     }
-     @POST
+
+    @POST
     @Path("/testagain")
     public Response createNe(JAXBElement<Image> imageJaxb) {
         System.out.println("createNewImage");
@@ -198,5 +203,4 @@ public class MediaResourceService implements MediaResource {
         final String uuIdFilename = UUID.randomUUID().toString();
         return uuIdFilename;
     }
-
 }

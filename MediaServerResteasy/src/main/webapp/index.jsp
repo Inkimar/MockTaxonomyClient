@@ -9,7 +9,7 @@
             <p>
                 Owner : <input type="text" name="owner" /></br>
             </p>
-             <p>
+            <p>
                 private/public : <input type="text" name="access" /></br>
             </p>
             <p>
