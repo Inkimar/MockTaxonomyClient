@@ -20,9 +20,10 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import se.nrm.mediaserver.util.PathHelper;
 
 /**
- *
+ * http://localhost:8080/MediaServerResteasy/media/stream/84a6ad8b-3d9f-4f75-b856-44e23b002327
  * @author ingimar
  */
 @Path("/media")
@@ -81,7 +82,7 @@ public class MediaResourceFetchService {
 
             BufferedImage resizeImageJpg = resizeImage150x150(originalImage, type);
             ImageIO.write(resizeImageJpg, "jpg", new File(file + ".thumb"));
-//            File cacheDirectory = ImageIO.getCacheDirectory();
+            File cacheDirectory = ImageIO.getCacheDirectory();
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
@@ -107,17 +108,8 @@ public class MediaResourceFetchService {
         return resizedImage;
 
     }
-    // check, same code as in another class - bryt ut till egen 
 
     private String getDynamicPath(String uuid) {
-        StringBuilder tmpPath = new StringBuilder(getAbsPath());
-        tmpPath.append(uuid.charAt(0)).append("/").append(uuid.charAt(1)).append("/").append(uuid.charAt(2)).append("/");
-        String pathen = tmpPath.toString();
-        return pathen;
-    }
-
-    private String getAbsPath() {
-        final String IMAGE_PATH = FilePropertiesHelper.getImagesFilePath();
-        return IMAGE_PATH;
+        return PathHelper.getDyanmicPathToFile(uuid);
     }
 }

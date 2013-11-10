@@ -5,8 +5,6 @@ package se.nrm.mediaserver.restful;
  * @author ingimar
  */
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URI;
@@ -23,7 +21,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 import javax.ws.rs.core.UriInfo;
 import javax.xml.bind.JAXBElement;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
@@ -34,15 +31,12 @@ import se.nrm.mediaserver.service.MediaService;
 import se.nrm.mediaserver.util.FilePropertiesHelper;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 import se.nrm.mediaserver.util.MimeParser;
-
+import se.nrm.mediaserver.util.PathHelper;
 
 /**
- * Att hämta en bild, hårdkodad
- * http://localhost:8080/MediaServerResteasy/media/bild/png
  * @author ingimar
  */
 @Path("/media")
-// @Stateless, måste paketeras rätt om du ska använda en böna ... 
 @Consumes({"application/xml", "application/json"})
 @Produces({"application/xml", "application/json"})
 public class MediaResourceService implements MediaResource {
@@ -52,6 +46,12 @@ public class MediaResourceService implements MediaResource {
 
     final MediaService bean = JNDIFetchRemote.outreach();
 
+    /**
+     * Upload file and metadata via a form / see index.jsp
+     * Saves file to filesystem, metadata to database.
+     * @param form
+     * @return 
+     */
     @POST
     @Path("/upload-file")
     @Consumes("multipart/form-data")
@@ -87,37 +87,38 @@ public class MediaResourceService implements MediaResource {
 
         return Response.status(200).entity(responseOutput).build();
     }
-
-    @POST
-    @Path("/bubble")
-    public Response createN(JAXBElement<Bubble> bubbleJaxb) {
-        System.out.println("Bubble on");
-        return Response.status(200).entity("hej").build();
-    }
-
-    @POST
-    @Path("/testagain")
-    public Response createNe(JAXBElement<Image> imageJaxb) {
-        System.out.println("createNewImage");
-        // klassen ska kontrollera UUID, den ska fylla i det
-        Media image = imageJaxb.getValue();
-        writeToDatabase(image);
-        URI bookUri = uriInfo.getAbsolutePathBuilder().path(image.getUuid().toString()).build();
-        return Response.created(bookUri).build();
-    }
-
-    @POST
-    @Path("/test")
-    public Response createNewImage(JAXBElement<Image> imageJaxb) {
-        System.out.println("createNewImage");
-        // klassen ska kontrollera UUID, den ska fylla i det
-        Media image = imageJaxb.getValue();
-        writeToDatabase(image);
-        URI bookUri = uriInfo.getAbsolutePathBuilder().path(image.getUuid().toString()).build();
-        return Response.created(bookUri).build();
-    }
+//
+//    @POST
+//    @Path("/bubble")
+//    public Response createN(JAXBElement<Bubble> bubbleJaxb) {
+//        System.out.println("Bubble on");
+//        return Response.status(200).entity("hej").build();
+//    }
+//
+//    @POST
+//    @Path("/testagain")
+//    public Response createNe(JAXBElement<Image> imageJaxb) {
+//        System.out.println("createNewImage");
+//        // klassen ska kontrollera UUID, den ska fylla i det
+//        Media image = imageJaxb.getValue();
+//        writeToDatabase(image);
+//        URI bookUri = uriInfo.getAbsolutePathBuilder().path(image.getUuid().toString()).build();
+//        return Response.created(bookUri).build();
+//    }
+//
+//    @POST
+//    @Path("/test")
+//    public Response createNewImage(JAXBElement<Image> imageJaxb) {
+//        System.out.println("createNewImage");
+//        // klassen ska kontrollera UUID, den ska fylla i det
+//        Media image = imageJaxb.getValue();
+//        writeToDatabase(image);
+//        URI bookUri = uriInfo.getAbsolutePathBuilder().path(image.getUuid().toString()).build();
+//        return Response.created(bookUri).build();
+//    }
 
     /**
+     * Fetch metadata from database, using the EJB
      * @param uuid
      * @return
      */
@@ -159,18 +160,9 @@ public class MediaResourceService implements MediaResource {
     public String getTesting() {
         return "Testar ... igen klockan 16:22";
     }
-    // bryt ut. egen klass
 
     private String absolutePathToFile(String uuid) {
-        String IMAGE_PATH = FilePropertiesHelper.getImagesFilePath();
-
-        StringBuilder tmpPath = new StringBuilder(IMAGE_PATH);
-        tmpPath.append(uuid.charAt(0)).append("/").append(uuid.charAt(1)).append("/").append(uuid.charAt(2)).append("/");
-        String pathen = tmpPath.toString();
-        File directory = new File(pathen);
-
-        boolean isDir = directory.mkdirs();
-        return pathen.concat(uuid);
+       return  PathHelper.getDynamicUUUIDFile(uuid);
     }
 
     private void writeToFile(FileUploadForm form, String uploadedFileLocation) {
@@ -192,6 +184,7 @@ public class MediaResourceService implements MediaResource {
         }
     }
 
+    // dispatched to bean
     private void writeToDatabase(Media media) {
         String serverDate = bean.getServerDate();
         System.out.println("Media is -> " + media);
