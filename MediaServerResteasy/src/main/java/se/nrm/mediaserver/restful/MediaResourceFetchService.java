@@ -72,6 +72,8 @@ public class MediaResourceFetchService {
 
     private void savesThumbfil(String file) {
 
+        
+        // returnera on-the-fly , kan inte köra in BufferedImage hit ->  return Response.ok(new FileInputStream(file)).build();
         try {
 
             BufferedImage originalImage = ImageIO.read(new File(file));
@@ -79,6 +81,7 @@ public class MediaResourceFetchService {
 
             BufferedImage resizeImageJpg = resizeImage150x150(originalImage, type);
             ImageIO.write(resizeImageJpg, "jpg", new File(file + ".thumb"));
+//            File cacheDirectory = ImageIO.getCacheDirectory();
 
         } catch (IOException e) {
             System.out.println(e.getMessage());
