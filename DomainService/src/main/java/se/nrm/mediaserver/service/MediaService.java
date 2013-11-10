@@ -8,7 +8,7 @@ import java.util.List;
 import javax.ejb.Remote;
 
 /**
- *
+ * Concerns only the database
  * @author ingimar
  * @param <T>
  */
@@ -16,10 +16,10 @@ import javax.ejb.Remote;
 public interface MediaService<T extends Object> {
 
     void save(T media);
-    void delete(String uuid); // might want the whole object
+    void delete(String uuid); // might want the whole object ?
     T get(String uuid);
     String getServerDate();
     List getAll();
 
-    public String getHtml();
+    String getHtml();
 }
