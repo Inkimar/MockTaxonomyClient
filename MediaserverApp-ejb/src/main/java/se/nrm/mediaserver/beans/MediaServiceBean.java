@@ -10,6 +10,7 @@ import javax.persistence.Query;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import se.nrm.mediaserver.beans.util.Profiled;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.service.MediaService;
 
@@ -38,7 +39,8 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         return "EJB-bean says Hello. Servertime is " + date.toString();
     }
 
-    @Override
+    @Override   
+    @Profiled
     public void save(T media) {
         em.merge(media);
     }
