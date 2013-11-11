@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -18,11 +19,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "MEDIA")
+@NamedQuery(name = Media.FIND_BY_UUID, query = "SELECT c FROM Media c  where c.uuid = :uuid")
 @XmlRootElement
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Media implements Serializable {
 
     private static long serialVersionUID = 6L;
+    
+    public static final String FIND_BY_UUID = "Media.FindByUuid";
 
     @Id
     @Column(name = "UUID")
