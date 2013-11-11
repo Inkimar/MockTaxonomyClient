@@ -22,7 +22,7 @@ import org.apache.log4j.Logger;
 public class BasicProfiledMethodInterceptor {
 
 //    private static final Logger LOGGER = LoggerFactory.getLogger(BasicProfiledMethodInterceptor.class);
-    private static final Logger LOGGER = Logger.getLogger(BasicProfiledMethodInterceptor.class);
+//    private static final Logger LOGGER = Logger.getLogger(BasicProfiledMethodInterceptor.class);
 
     /**
      * starts a stopwatch before a given method execution and stops it after the
@@ -34,7 +34,7 @@ public class BasicProfiledMethodInterceptor {
      */
     @AroundInvoke
     public Object profile(InvocationContext context) throws Exception {
-        System.out.println("inne i profiler klockan 2400");
+        System.out.println("inne i profiler klockan 16:58");
         // starts the stopwatch
         final long startTime = System.currentTimeMillis();
 
@@ -47,7 +47,6 @@ public class BasicProfiledMethodInterceptor {
         // logs method and time
         final String methodSignature = context.getMethod().toString();
 //        LOGGER.info("Profiled Method: {} in {} ms", methodSignature, elapsedTime);
-        LOGGER.info("Log4j");
         return o;
     }
 }

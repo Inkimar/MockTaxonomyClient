@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import se.nrm.mediaserver.beans.util.Profiled;
 import se.nrm.mediaserver.media3.domain.Image;
+import se.nrm.mediaserver.media3.domain.Media;
 import se.nrm.mediaserver.service.MediaService;
 
 /**
@@ -40,7 +41,7 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
     }
 
     @Override   
-    @Profiled
+    @Profiled // interceptorn som ska ta tiden, log4j inställningar kvar
     public void save(T media) {
         em.merge(media);
     }
@@ -53,12 +54,11 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
 
     @Override
     public T get(String uuid) {
+        System.out.println("Again uuid "+uuid);
         T Image = null;
-        final String fetch = "SELECT c FROM Image c  where c.uuid = :uuid";
-        Query createQuery = em.createQuery(fetch);
-        createQuery.setParameter("uuid", uuid);
-        Image = (T) createQuery.getSingleResult();
-
+        Query createNamedQuery = em.createNamedQuery(Media.FIND_BY_UUID);
+        createNamedQuery.setParameter("uuid", uuid);
+        Image = (T) createNamedQuery.getSingleResult();
         return Image;
     }
 
