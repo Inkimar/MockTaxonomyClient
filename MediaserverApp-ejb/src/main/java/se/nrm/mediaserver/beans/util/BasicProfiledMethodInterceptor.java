@@ -1,9 +1,11 @@
 package se.nrm.mediaserver.beans.util;
 
+import java.lang.reflect.Method;
 import javax.interceptor.AroundInvoke;
 import javax.interceptor.Interceptor;
 import javax.interceptor.InvocationContext;
 import org.apache.log4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ex lånat från :
@@ -21,8 +23,8 @@ import org.apache.log4j.Logger;
 @Interceptor
 public class BasicProfiledMethodInterceptor {
 
-//    private static final Logger LOGGER = LoggerFactory.getLogger(BasicProfiledMethodInterceptor.class);
-//    private static final Logger LOGGER = Logger.getLogger(BasicProfiledMethodInterceptor.class);
+    // private static final Logger LOGGER = LoggerFactory.getLogger(BasicProfiledMethodInterceptor.class);
+    private static final Logger LOGGER = Logger.getLogger(BasicProfiledMethodInterceptor.class);
 
     /**
      * starts a stopwatch before a given method execution and stops it after the
@@ -34,7 +36,7 @@ public class BasicProfiledMethodInterceptor {
      */
     @AroundInvoke
     public Object profile(InvocationContext context) throws Exception {
-        System.out.println("inne i profiler klockan 16:58");
+        System.out.println("inne i profiler klockan 13:45");
         // starts the stopwatch
         final long startTime = System.currentTimeMillis();
 
@@ -43,10 +45,11 @@ public class BasicProfiledMethodInterceptor {
 
         // stops the stopwatch and computes elapsed time
         final long elapsedTime = System.currentTimeMillis() - startTime;
-
+        Method method = context.getMethod();
+       
         // logs method and time
-        final String methodSignature = context.getMethod().toString();
-//        LOGGER.info("Profiled Method: {} in {} ms", methodSignature, elapsedTime);
+    //    LOGGER.info("Profiled Method: {} in {} ms", methodSignature, elapsedTime);
+        LOGGER.info("Profiled Method: "+method + " in "+elapsedTime+" in ms");
         return o;
     }
 }
