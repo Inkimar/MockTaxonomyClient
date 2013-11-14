@@ -17,13 +17,8 @@ Hämta en, sök på UUID:
      * </image>
      *
 
-Radera:
+Radera: strängen kan ha ändrats
  curl -X DELETE http://localhost:8080/MediaServerResteasy/media/image/768bed28-0805-4c9f-800a-440476f2c823
-
-
- curl -X POST --data-binary "{ \"title\":\"H2G2\", \"description\":\"Scifi IT book\", \"illustrations\":\"false\",\"isbn\":\"134-234\",\"nbOfPage\":\"241\",\"price\":\"24.0\" }"  -H "Content-Type: application/json" http://localhost:8080/MediaServerResteasy/media/bubble -v
-
-
 
 
 
