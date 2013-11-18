@@ -49,7 +49,7 @@ public class BasicProfiledMethodInterceptor {
        
         // logs method and time
     //    LOGGER.info("Profiled Method: {} in {} ms", methodSignature, elapsedTime);
-        LOGGER.info("Profiled Method: "+method + " in "+elapsedTime+" in ms");
+        LOGGER.info("Profiled Method: "+method + " in "+elapsedTime+" ms");
         return o;
     }
 }

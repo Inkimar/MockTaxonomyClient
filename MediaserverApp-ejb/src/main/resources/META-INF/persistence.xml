@@ -7,6 +7,7 @@
         <class>se.nrm.mediaserver.media3.domain.Media</class>
         <class>se.nrm.mediaserver.media3.domain.MediaText</class>
         <class>se.nrm.mediaserver.media3.domain.MetaData</class>
+        <class>se.nrm.mediaserver.media3.domain.Tag</class>
         <properties/>
     </persistence-unit>
     <persistence-unit name="PostgrePU" transaction-type="JTA">
