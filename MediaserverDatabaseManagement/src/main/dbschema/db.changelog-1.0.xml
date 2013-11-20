@@ -5,7 +5,10 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-2.0.xsd">
-  <changeSet id="1" author="ingimar">
+    <!--<property name="now" value="now()" dbms="mysql"/>-->
+    <!--<property name="now" value="UNIX_TIMESTAMP()" dbms="mysql"/>-->
+    
+    <changeSet id="1" author="ingimar">
         <createTable tableName="MEDIA">
             <column name="UUID" type="varchar(255)" autoIncrement="false">
                 <constraints primaryKey="true" nullable="false"/>
@@ -26,8 +29,22 @@
             </column>
         </createTable>
         <addForeignKeyConstraint constraintName="FK_MEDIA_UUID"
-                             baseTableName="IMAGE" baseColumnNames="UUID"
-                             referencedTableName="MEDIA" referencedColumnNames="UUID"
+                                 baseTableName="IMAGE" baseColumnNames="UUID"
+                                 referencedTableName="MEDIA" referencedColumnNames="UUID"
         />
+    </changeSet>  
+    <changeSet id="3" author="ingimar">
+        <createTable tableName="TAG">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="TAG_KEY" type="varchar(255)"/>
+            <column name="TAG_POINTER" type="varchar(255)">
+            </column>
+            <column name="EXTERNAL_SYSTEM" type="varchar(255)"/>
+            <column name="DATE_CREATED" type="TIMESTAMP">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
     </changeSet>
 </databaseChangeLog>
