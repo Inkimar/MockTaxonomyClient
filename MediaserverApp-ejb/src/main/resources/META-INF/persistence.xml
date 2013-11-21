@@ -10,11 +10,7 @@
         <class>se.nrm.mediaserver.media3.domain.Tag</class>
         <properties/>
     </persistence-unit>
-    <persistence-unit name="PostgrePU" transaction-type="JTA">
+<!--    <persistence-unit name="PostgrePU" transaction-type="JTA">
         <jta-data-source>jdbc/__nrmPostgresPool</jta-data-source>
-        <!--        <exclude-unlisted-classes>false</exclude-unlisted-classes>
-        <properties>
-            <property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
-        </properties>-->
-    </persistence-unit>
+    </persistence-unit>-->
 </persistence>
