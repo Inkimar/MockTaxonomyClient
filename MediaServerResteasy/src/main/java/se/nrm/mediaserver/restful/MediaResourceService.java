@@ -27,6 +27,7 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import se.nrm.mediaserver.media3.domain.Bubble;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
+import se.nrm.mediaserver.media3.domain.Tag;
 import se.nrm.mediaserver.service.MediaService;
 import se.nrm.mediaserver.util.FilePropertiesHelper;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
@@ -47,10 +48,11 @@ public class MediaResourceService implements MediaResource {
     final MediaService bean = JNDIFetchRemote.outreach();
 
     /**
-     * Upload file and metadata via a form / see index.jsp
-     * Saves file to filesystem, metadata to database.
+     * Upload file and metadata via a form / see index.jsp Saves file to
+     * filesystem, metadata to database.
+     * dependency upon resteasy - a restful impl.
      * @param form
-     * @return 
+     * @return
      */
     @POST
     @Path("/upload-file")
@@ -87,38 +89,10 @@ public class MediaResourceService implements MediaResource {
 
         return Response.status(200).entity(responseOutput).build();
     }
-//
-//    @POST
-//    @Path("/bubble")
-//    public Response createN(JAXBElement<Bubble> bubbleJaxb) {
-//        System.out.println("Bubble on");
-//        return Response.status(200).entity("hej").build();
-//    }
-//
-//    @POST
-//    @Path("/testagain")
-//    public Response createNe(JAXBElement<Image> imageJaxb) {
-//        System.out.println("createNewImage");
-//        // klassen ska kontrollera UUID, den ska fylla i det
-//        Media image = imageJaxb.getValue();
-//        writeToDatabase(image);
-//        URI bookUri = uriInfo.getAbsolutePathBuilder().path(image.getUuid().toString()).build();
-//        return Response.created(bookUri).build();
-//    }
-//
-//    @POST
-//    @Path("/test")
-//    public Response createNewImage(JAXBElement<Image> imageJaxb) {
-//        System.out.println("createNewImage");
-//        // klassen ska kontrollera UUID, den ska fylla i det
-//        Media image = imageJaxb.getValue();
-//        writeToDatabase(image);
-//        URI bookUri = uriInfo.getAbsolutePathBuilder().path(image.getUuid().toString()).build();
-//        return Response.created(bookUri).build();
-//    }
 
     /**
      * Fetch metadata from database, using the EJB
+     *
      * @param uuid
      * @return
      */
@@ -126,9 +100,9 @@ public class MediaResourceService implements MediaResource {
     @Path("/image/{uuid}")
     @Override
     public Image getMediaAsXML(@PathParam("uuid") String uuid) {
-        Image media = (Image) bean.get(uuid);
-        System.out.println("Image is " + media);
-        return media;
+        Image image = (Image) bean.get(uuid);
+        System.out.println("Image is " + image);
+        return image;
     }
 
     /**
@@ -138,7 +112,6 @@ public class MediaResourceService implements MediaResource {
     @Path("/image/{uuid}")
     @Override
     public void deleteMediaMetaData(@PathParam("uuid") String uuid) {
-        System.out.println("delete record with uuid as " + uuid);
         bean.delete(uuid);
     }
 
@@ -146,7 +119,6 @@ public class MediaResourceService implements MediaResource {
     @Path("/all")
     @Produces("text/plain")
     public List getAllMediaMetaData() {
-        System.out.println("getting all");
         List<Image> images = bean.getAll();
 
         return images;
@@ -162,9 +134,10 @@ public class MediaResourceService implements MediaResource {
     }
 
     private String absolutePathToFile(String uuid) {
-       return  PathHelper.getDynamicUUUIDFile(uuid);
+        return PathHelper.getDynamicUUUIDFile(uuid);
     }
 
+    // @TODO Should be the responsibility of the bean.
     private void writeToFile(FileUploadForm form, String uploadedFileLocation) {
 
         try {
@@ -187,8 +160,6 @@ public class MediaResourceService implements MediaResource {
     // dispatched to bean
     private void writeToDatabase(Media media) {
         String serverDate = bean.getServerDate();
-        System.out.println("Media is -> " + media);
-        System.out.println("Serverdate -> " + serverDate);
         bean.save(media);
     }
 

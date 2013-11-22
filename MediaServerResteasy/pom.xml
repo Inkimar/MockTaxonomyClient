@@ -38,11 +38,17 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
+        <!--        <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
             <version>6.0</version>
             <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>6.0</version>
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>se.mediaserver.tutorial.mediaweb</groupId>
@@ -55,7 +61,8 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>2.3.1.GA</version>
+            <version>3.0.4.Final</version> <!-- uppar den 22 nov kl 10:44-->
+            <!--<version>2.3.1.GA</version>-->
         </dependency>
         <!-- Multipart support -->
         <dependency>
@@ -68,8 +75,8 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson-provider</artifactId>
-            <!--<version>3.0.4.Final</version>-->
-            <version>2.2.1.GA</version>
+            <version>3.0.5.Final</version>
+            <!--<version>2.2.1.GA</version>-->
         </dependency>
         <!--        <dependency>
                 <groupId>org.jboss.resteasy</groupId>
