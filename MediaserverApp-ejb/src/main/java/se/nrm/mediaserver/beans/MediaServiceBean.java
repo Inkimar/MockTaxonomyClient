@@ -55,11 +55,12 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
     @Override
     public T get(String uuid) {
         System.out.println("Again uuid "+uuid);
-        T Image = null;
-        Query createNamedQuery = em.createNamedQuery(Media.FIND_BY_UUID);
-        createNamedQuery.setParameter("uuid", uuid);
-        Image = (T) createNamedQuery.getSingleResult();
-        return Image;
+        Query namedQuery = em.createNamedQuery(Media.FIND_BY_UUID);
+        namedQuery.setParameter("uuid", uuid);
+        
+        T image = (T) namedQuery.getSingleResult();
+       
+        return image;
     }
 
     @Override
@@ -68,8 +69,4 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         List<Image> images = query.getResultList();
         return images;
     }
-    
-    
-
-    
 }
