@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -21,7 +23,6 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "TAG")
-@XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Tag.findAll",
             query = "SELECT t FROM Tag t"),
@@ -37,6 +38,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 //    @NamedQuery(name = "Tag.findByDateCreated",
 //            query = "SELECT t FROM Tag t WHERE t.dateCreated = :dateCreated")
 })
+@XmlRootElement
 public class Tag implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -59,12 +61,12 @@ public class Tag implements Serializable {
     @Column(name = "EXTERNAL_SYSTEM")
     private String externalSystem;
 
-//    @Basic(optional = false)
-//    @NotNull
-//    @Column(name = "DATE_CREATED")
-//    @Temporal(TemporalType.TIMESTAMP)
     @Transient
     private Date dateCreated;
+    
+    @ManyToOne
+    @JoinColumn(name = "MEDIA_UUID")
+    private Media media;
 
     public Tag() {
     }
@@ -118,29 +120,26 @@ public class Tag implements Serializable {
         this.dateCreated = dateCreated;
     }
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+    public Media getMedia() {
+        return media;
     }
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Tag)) {
-            return false;
-        }
-        Tag other = (Tag) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+    public void setMedia(Media media) {
+        this.media = media;
     }
-
+   
     @Override
     public String toString() {
-        return "se.nrm.mediaserver.media3.domain.Tag[ id=" + id + " ]";
+        final StringBuilder sb = new StringBuilder();
+        sb.append('{');
+        sb.append("Media:");
+        sb.append(", id='").append(id).append('\'');
+        sb.append(", tagKey='").append(tagKey).append('\'');
+        sb.append(", tagPointer='").append(tagPointer).append('\'');
+        sb.append(", externalSystem='").append(externalSystem).append('\'');
+        sb.append(", dateCreated='").append(dateCreated).append('\'');
+        sb.append('}');
+        return sb.toString();
     }
 
 }

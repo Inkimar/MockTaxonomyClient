@@ -1,13 +1,23 @@
 package se.nrm.mediaserver.media3.domain;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 /**
@@ -19,13 +29,15 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "MEDIA")
-@NamedQuery(name = Media.FIND_BY_UUID, query = "SELECT c FROM Media c  where c.uuid = :uuid")
+@NamedQueries({
+    @NamedQuery(name = Media.FIND_BY_UUID, query = "SELECT c FROM Media c  where c.uuid = :uuid")
+})
 @XmlRootElement
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Media implements Serializable {
 
-    private static long serialVersionUID = 6L;
-    
+    private static final long serialVersionUID = -8636046618352460140L;
+
     public static final String FIND_BY_UUID = "Media.FindByUuid";
 
     @Id
@@ -44,6 +56,10 @@ public abstract class Media implements Serializable {
     @Column(name = "MIME_TYE", length = 50, table = "MEDIA")
     private String mimetype; // anv. Enum
 
+   // @XmlElement // not working
+    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Tag> tags;
+
 //    @Embedded
 //    private MediaText mediaText;
     public Media() {
@@ -55,11 +71,11 @@ public abstract class Media implements Serializable {
 
     /**
      * Testing with JSON from curl.
-     * 
+     *
      * @param owner
      * @param visibility
      * @param filename
-     * @param mimetype 
+     * @param mimetype
      */
     public Media(String owner, String visibility, String filename, String mimetype) {
         this.owner = owner;
@@ -112,6 +128,30 @@ public abstract class Media implements Serializable {
         return "testing";
     }
 
+    public List<Tag> getTags() {
+        if (tags != null) {
+            tags.size(); // this is needed for IndirectList: not instantiated 
+            return Collections.unmodifiableList(tags);
+        } else {
+            return Collections.<Tag>emptyList();
+        }
+    }
+
+    public boolean addTag(Tag tag) {
+        if (tags == null) {
+            tags = new LinkedList<Tag>();
+        }
+        if (tag != null && !tags.contains(tag)) {
+            tags.add(tag);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeTag(Tag tag) {
+        return (tags != null && !tags.isEmpty() && tags.remove(tag));
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
@@ -122,6 +162,10 @@ public abstract class Media implements Serializable {
         sb.append(", visibility='").append(visibility).append('\'');
         sb.append(", filename='").append(filename).append('\'');
         sb.append(", mimetype='").append(mimetype).append('\'');
+        // for the sake of testing
+        if (tags != null) {
+            sb.append(", tag size ='").append(tags.size()).append('\'');
+        }
         sb.append('}');
         return sb.toString();
     }

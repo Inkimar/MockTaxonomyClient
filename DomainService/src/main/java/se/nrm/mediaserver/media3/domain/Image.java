@@ -17,7 +17,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Image extends Media implements Serializable {
 
     private static final long serialVersionUID = 6L;
-    
+
     public static final String FIND_ALL = "Image.findAll";
 
     public Image() {
@@ -26,9 +26,8 @@ public class Image extends Media implements Serializable {
     public Image(String owner) {
         super(owner);
     }
-    
-    
+
     public Image(String owner, String visibility, String filename, String mimetype) {
-      super(owner, visibility, filename, mimetype);
-    }  
+        super(owner, visibility, filename, mimetype);
+    }
 }
