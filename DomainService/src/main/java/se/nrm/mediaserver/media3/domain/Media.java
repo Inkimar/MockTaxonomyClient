@@ -17,8 +17,12 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Will wait to implement hashcode/equals. hascode and equals ...
@@ -32,11 +36,12 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = Media.FIND_BY_UUID, query = "SELECT c FROM Media c  where c.uuid = :uuid")
 })
+@XmlAccessorType(value = XmlAccessType.FIELD)
 @XmlRootElement
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Media implements Serializable {
 
-    private static final long serialVersionUID = -8636046618352460140L;
+    private static final long serialVersionUID = -863604661852460140L;
 
     public static final String FIND_BY_UUID = "Media.FindByUuid";
 
@@ -56,9 +61,15 @@ public abstract class Media implements Serializable {
     @Column(name = "MIME_TYE", length = 50, table = "MEDIA")
     private String mimetype; // anv. Enum
 
-   // @XmlElement // not working
     @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Tag> tags;
+//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "media", targetEntity = Tag.class,
+//            fetch = FetchType.EAGER)
+//    @XmlElementWrapper(name = "tags")
+//    @XmlElement(name = "tag", required = true)
+//    private List<Tag> tags;
+    
+  
 
 //    @Embedded
 //    private MediaText mediaText;

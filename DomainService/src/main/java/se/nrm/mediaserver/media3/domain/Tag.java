@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,7 +16,10 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,6 +42,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 //    @NamedQuery(name = "Tag.findByDateCreated",
 //            query = "SELECT t FROM Tag t WHERE t.dateCreated = :dateCreated")
 })
+@XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Tag implements Serializable {
 
@@ -63,10 +68,14 @@ public class Tag implements Serializable {
 
     @Transient
     private Date dateCreated;
-    
+
     @ManyToOne
     @JoinColumn(name = "MEDIA_UUID")
     private Media media;
+//    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+//    @JoinColumn(name = "MEDIA_UUID")
+//    @XmlTransient
+//    private Media media;
 
     public Tag() {
     }
@@ -127,7 +136,7 @@ public class Tag implements Serializable {
     public void setMedia(Media media) {
         this.media = media;
     }
-   
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
