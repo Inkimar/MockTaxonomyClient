@@ -13,6 +13,8 @@
 /J2SE-Client/nbproject/private/
 /MediaServerRestful/target/
 /MediaServerRestful/nbproject/private/
+MediaserverApp-ear/target
+MediaserverRemote-web/target
 /MediaserverApp-ejb/target
 /MediaserverApp-ejb/nbproject/private
 /MediaserverApp-web/target
