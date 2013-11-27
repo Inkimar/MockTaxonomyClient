@@ -69,13 +69,10 @@ public class Tag implements Serializable {
     @Transient
     private Date dateCreated;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "MEDIA_UUID")
+    @XmlTransient
     private Media media;
-//    @ManyToOne(fetch = FetchType.EAGER, optional = false)
-//    @JoinColumn(name = "MEDIA_UUID")
-//    @XmlTransient
-//    private Media media;
 
     public Tag() {
     }

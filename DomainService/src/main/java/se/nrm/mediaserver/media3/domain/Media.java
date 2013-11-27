@@ -1,9 +1,8 @@
 package se.nrm.mediaserver.media3.domain;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,8 +10,6 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -22,7 +19,6 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * Will wait to implement hashcode/equals. hascode and equals ...
@@ -61,15 +57,11 @@ public abstract class Media implements Serializable {
     @Column(name = "MIME_TYE", length = 50, table = "MEDIA")
     private String mimetype; // anv. Enum
 
-    @OneToMany(mappedBy = "media", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Tag> tags;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "media", targetEntity = Tag.class,
-//            fetch = FetchType.EAGER)
-//    @XmlElementWrapper(name = "tags")
-//    @XmlElement(name = "tag", required = true)
-//    private List<Tag> tags;
-    
-  
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "media",
+            targetEntity = Tag.class, fetch = FetchType.EAGER)
+    @XmlElementWrapper(name = "tags")
+    @XmlElement(name = "tag", required = true)
+    private Collection<Tag> tags;
 
 //    @Embedded
 //    private MediaText mediaText;
@@ -139,30 +131,41 @@ public abstract class Media implements Serializable {
         return "testing";
     }
 
-    public List<Tag> getTags() {
+    public Collection<Tag> getTags() {
         if (tags != null) {
-            tags.size(); // this is needed for IndirectList: not instantiated 
-            return Collections.unmodifiableList(tags);
+            return Collections.unmodifiableCollection(tags);
         } else {
             return Collections.<Tag>emptyList();
         }
     }
 
-    public boolean addTag(Tag tag) {
-        if (tags == null) {
-            tags = new LinkedList<Tag>();
-        }
-        if (tag != null && !tags.contains(tag)) {
-            tags.add(tag);
-            return true;
-        }
-        return false;
+    public void setTags(Collection<Tag> tags) {
+        this.tags = tags;
     }
 
-    public boolean removeTag(Tag tag) {
-        return (tags != null && !tags.isEmpty() && tags.remove(tag));
-    }
-
+//    public List<Tag> getTags() {
+//        if (tags != null) {
+//            tags.size(); // this is needed for IndirectList: not instantiated 
+//            return Collections.unmodifiableList(tags);
+//        } else {
+//            return Collections.<Tag>emptyList();
+//        }
+//    }
+//
+//    public boolean addTag(Tag tag) {
+//        if (tags == null) {
+//            tags = new LinkedList<Tag>();
+//        }
+//        if (tag != null && !tags.contains(tag)) {
+//            tags.add(tag);
+//            return true;
+//        }
+//        return false;
+//    }
+//
+//    public boolean removeTag(Tag tag) {
+//        return (tags != null && !tags.isEmpty() && tags.remove(tag));
+//    }
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();
