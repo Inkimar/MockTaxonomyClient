@@ -9,4 +9,5 @@ Anteckningar :
 4. Put above three jars into glassfish-install-dir/domains/domain1/lib/ext
 
 loggar från min interceptor.
+- beans.xml måste då finnas
        

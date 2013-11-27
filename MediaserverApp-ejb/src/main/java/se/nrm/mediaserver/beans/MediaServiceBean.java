@@ -20,7 +20,7 @@ import se.nrm.mediaserver.service.MediaService;
  *
  * @author ingimar
  */
-@Path("image")
+//@Path("image")
 @Stateless
 public class MediaServiceBean<T> implements MediaService<T>, Serializable {
 

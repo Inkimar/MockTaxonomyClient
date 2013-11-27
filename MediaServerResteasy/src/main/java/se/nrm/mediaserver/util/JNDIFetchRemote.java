@@ -19,7 +19,7 @@ public class JNDIFetchRemote {
             jndiProps.put("java.naming.factory.initial", "com.sun.enterprise.naming.impl.SerialInitContextFactory");
             jndiProps.put("java.naming.factory.url.pkgs", "com.sun.enterprise.naming");
             jndiProps.put("java.naming.factory.state", "com.sun.corba.ee.impl.presentation.rmi.JNDIStateFactoryImpl");
-            jndiProps.setProperty("org.omg.CORBA.ORBInitialHost", "192.168.10.163"); // 192.168.10.163, 172.16.23.14, 192.168.10.163
+            jndiProps.setProperty("org.omg.CORBA.ORBInitialHost", "172.16.23.56"); // 192.168.10.163, 172.16.23.14, 172.16.23.13 192.168.10.163
             Context ctx = new InitialContext(jndiProps);
             String lookupEAR = "java:global/MediaserverApp-ear/MediaserverApp-ejb-1.0-SNAPSHOT/MediaServiceBean!se.nrm.mediaserver.service.MediaService";
             String lookupEJB = "java:global/MediaserverApp-ejb/MediaServiceBean!se.nrm.mediaserver.service.MediaService";

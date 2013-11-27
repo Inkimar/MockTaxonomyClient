@@ -36,7 +36,6 @@
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
             <version>6.0</version>
-            <!-- to 7.0 when testing GF 4 -->
             <scope>provided</scope>
         </dependency>
         <dependency>

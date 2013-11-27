@@ -26,9 +26,9 @@
         <module>MediaserverApp-ejb</module>
         <module>J2SE-Client</module>
         <module>Client</module>
-        <!--<module>Domain</module>-->
         <module>MediaserverRemote-web</module>
         <module>MediaServerRestful</module>
         <module>MediaServerResteasy</module>
+        <!--<module>Mediaserver-database-management</module>-->
   </modules>
 </project>

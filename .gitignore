@@ -21,3 +21,9 @@
 /Client/target/
 /MediaServerResteasy/target/
 /Mediaserver-EJB/target/
+/TestGuava/nbproject/private/
+/TestGuava/build/
+/TestRezising/nbproject/private/
+/TestRezising/build/
+/TestRezising/dist/
+/TestingEntityRestful/target/
