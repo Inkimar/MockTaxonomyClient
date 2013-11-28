@@ -54,7 +54,7 @@ public abstract class Media implements Serializable {
     @Column(name = "FILENAME", length = 255, table = "MEDIA")
     private String filename;
 
-    @Column(name = "MIME_TYE", length = 50, table = "MEDIA")
+    @Column(name = "MIME_TYPE", length = 50, table = "MEDIA")
     private String mimetype; // anv. Enum
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "media",
