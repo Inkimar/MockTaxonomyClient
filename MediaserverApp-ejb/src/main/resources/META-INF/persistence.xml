@@ -3,14 +3,14 @@
     <persistence-unit name="MysqlPU" transaction-type="JTA">
         <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
         <jta-data-source>jdbc/__nrmMin</jta-data-source>
+        <!--<jta-data-source>jdbc/__liq</jta-data-source>-->
         <class>se.nrm.mediaserver.media3.domain.Image</class>
         <class>se.nrm.mediaserver.media3.domain.Media</class>
         <class>se.nrm.mediaserver.media3.domain.MediaText</class>
         <class>se.nrm.mediaserver.media3.domain.MetaData</class>
         <class>se.nrm.mediaserver.media3.domain.Tag</class>
-        <properties/>
-    </persistence-unit>
-<!--    <persistence-unit name="PostgrePU" transaction-type="JTA">
+    </persistence-unit> 
+    <!--    <persistence-unit name="PostgrePU" transaction-type="JTA">
         <jta-data-source>jdbc/__nrmPostgresPool</jta-data-source>
     </persistence-unit>-->
 </persistence>
