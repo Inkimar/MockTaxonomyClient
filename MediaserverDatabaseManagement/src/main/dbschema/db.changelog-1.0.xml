@@ -39,10 +39,10 @@
             <column name="TAG_KEY" type="varchar(255)"/>
             <column name="TAG_POINTER" type="varchar(255)"/>
             <column name="EXTERNAL_SYSTEM" type="varchar(255)"/>
-            <column name="MEDIA_UUID" type="varchar(255)"/>
-            <column name="DATE_CREATED" type="TIMESTAMP">
+            <column name="MEDIA_UUID" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
+            <column name="DATE_CREATED" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
         </createTable>
         <addForeignKeyConstraint constraintName="FK_TAG_MEDIA"
                                  baseTableName="TAG" baseColumnNames="MEDIA_UUID"
