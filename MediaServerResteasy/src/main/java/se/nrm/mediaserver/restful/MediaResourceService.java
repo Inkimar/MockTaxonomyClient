@@ -33,6 +33,8 @@ import se.nrm.mediaserver.util.FilePropertiesHelper;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 import se.nrm.mediaserver.util.MimeParser;
 import se.nrm.mediaserver.util.PathHelper;
+import se.nrm.mediaserver.util.FileSystemWriter;
+import se.nrm.mediaserver.util.Writeable;
 
 /**
  * @author ingimar
@@ -138,23 +140,11 @@ public class MediaResourceService implements MediaResource {
     }
 
     // @TODO Should be the responsibility of the bean.
-    private void writeToFile(FileUploadForm form, String uploadedFileLocation) {
+    private void writeToFile(FileUploadForm form, String location) {
 
-        try {
-            File file = new File(uploadedFileLocation);
-
-            if (!file.exists()) {
-                file.createNewFile();
-            }
-
-            FileOutputStream fos = new FileOutputStream(file);
-
-            fos.write(form.getFileData());
-            fos.flush();
-            fos.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Writeable writer = new FileSystemWriter();
+        System.out.println("testing ");
+        writer.writeBytesTo(form.getFileData(), location);
     }
 
     // dispatched to bean
