@@ -30,6 +30,7 @@ import se.nrm.mediaserver.media3.domain.Media;
 import se.nrm.mediaserver.media3.domain.Tag;
 import se.nrm.mediaserver.service.MediaService;
 import se.nrm.mediaserver.util.FilePropertiesHelper;
+import se.nrm.mediaserver.util.FileSystemRemoteWriter;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 import se.nrm.mediaserver.util.MimeParser;
 import se.nrm.mediaserver.util.PathHelper;
