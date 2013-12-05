@@ -1,6 +1,7 @@
 package se.nrm.mediaserver.beans;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -20,19 +21,13 @@ import se.nrm.mediaserver.service.MediaService;
  *
  * @author ingimar
  */
-//@Path("image")
 @Stateless
 public class MediaServiceBean<T> implements MediaService<T>, Serializable {
 
     @PersistenceContext(unitName = "MysqlPU")
     private EntityManager em;
 
-    @GET
-    @Produces("text/html")
-    public String getHtml() {
-        return "<h2>Hello " + this.getClass().getCanonicalName() + " </h2>";
-    }
-
+  
     @Override
     public String getServerDate() {
         System.out.println("Metoden getServerDate");
@@ -63,10 +58,14 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         return image;
     }
 
-    @Override
-    public List<Image> getAll() {
-        Query query = em.createNamedQuery(Image.FIND_ALL);
-        List<Image> images = query.getResultList();
-        return images;
-    }
+     @Override
+     public List<Image> getAll() {
+         return Collections.EMPTY_LIST;
+     }
+//    @Override
+//    public List<Image> getAll() {
+//        Query query = em.createNamedQuery(Image.FIND_ALL);
+//        List<Image> images = query.getResultList();
+//        return images;
+//    }
 }
