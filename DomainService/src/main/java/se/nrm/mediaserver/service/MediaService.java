@@ -18,8 +18,6 @@ public interface MediaService<T extends Object> {
     void save(T media);
     void delete(String uuid); // might want the whole object ?
     T get(String uuid);
-    String getServerDate();
     List getAll();
-
-    String getHtml();
+    String getServerDate();
 }

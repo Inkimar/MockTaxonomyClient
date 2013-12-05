@@ -46,7 +46,7 @@ import javax.xml.bind.annotation.XmlTransient;
 @XmlRootElement
 public class Tag implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 2L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -65,6 +65,10 @@ public class Tag implements Serializable {
     @Size(max = 255)
     @Column(name = "EXTERNAL_SYSTEM")
     private String externalSystem;
+    
+    @Size(max = 255)
+    @Column(name = "WEBSERVICE_URL")
+    private String webserviceURL;
 
     @Transient
     private Date dateCreated;
@@ -125,6 +129,16 @@ public class Tag implements Serializable {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
+
+    public String getWebserviceURL() {
+        return webserviceURL;
+    }
+
+    public void setWebserviceURL(String webserviceURL) {
+        this.webserviceURL = webserviceURL;
+    }
+    
+    
 
     public Media getMedia() {
         return media;

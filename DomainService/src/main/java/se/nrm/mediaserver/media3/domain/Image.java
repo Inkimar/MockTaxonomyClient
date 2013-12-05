@@ -12,14 +12,14 @@ import javax.xml.bind.annotation.XmlRootElement;
  */
 @Entity
 @Table(name = "IMAGE")
-@NamedQuery(name = Image.FIND_ALL, query = "SELECT i FROM Image i")
+//@NamedQuery(name = Image.FIND_ALL, query = "SELECT i FROM Image i")
 @XmlRootElement
 public class Image extends Media implements Serializable {
 
     private static final long serialVersionUID = 6L;
 
-    public static final String FIND_ALL = "Image.findAll";
-
+//    public static final String FIND_ALL = "Image.findAll";
+    
     public Image() {
     }
 
