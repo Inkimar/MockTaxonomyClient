@@ -25,4 +25,16 @@
             <column name="EXIF_JSON" type="longtext"/>
         </createTable>
     </changeSet>
+<!--     <changeSet id="an admin for taxon" author="ingimar">
+         <comment>key/value , storing the restful-url to an external-system</comment>
+        <createTable tableName="ADMIN_CONFIGURE_EXTERNAL">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="NAME" type="varchar(255)">
+                <constraints unique="true"></constraints>
+            </column>
+            <column name="EXTERNAL_SYSTEM" type="varchar(255)"/>
+        </createTable>
+    </changeSet>-->
 </databaseChangeLog>

@@ -31,7 +31,9 @@
                                  referencedTableName="MEDIA" referencedColumnNames="UUID"
         />
     </changeSet>  
+    
     <changeSet id="3" author="ingimar">
+        
         <createTable tableName="TAG">
             <column name="ID" type="int" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
@@ -49,4 +51,56 @@
                                  referencedTableName="MEDIA" referencedColumnNames="UUID"
         />
     </changeSet>
+    
+    <changeSet id="4-alter-tag" author="ingimar">
+        <addColumn tableName="TAG">
+            <column name="WEBSERVICE_URL" type="varchar(255)"/>
+        </addColumn>
+    </changeSet>
+    
+    <changeSet id="5-adding-boolean-to-Image" author="ingimar">
+        <addColumn tableName="IMAGE">
+            <column name="IS_EXPORTED" type="boolean" defaultValueBoolean="false"/>
+        </addColumn>
+    </changeSet>
+    
+     <changeSet id="6-determination-for-external-systems" author="ingimar">
+        
+        <createTable tableName="DETERMINATION">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="TAG_KEY" type="varchar(255)"/>
+            <column name="TAG_VALUE" type="varchar(255)"/>
+            <column name="EXTERNAL_SYSTEM" type="varchar(255)"/>
+            <column name="EXTERNAL_SYSTEM_URL" type="varchar(255)"/>
+            <column name="MEDIA_UUID" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DATE_CREATED" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_DETERMINATION_MEDIA"
+                                 baseTableName="DETERMINATION" baseColumnNames="MEDIA_UUID"
+                                 referencedTableName="MEDIA" referencedColumnNames="UUID"
+        />
+    </changeSet>
+     <changeSet id="tag-table" author="ingimar">
+        <dropTable tableName="TAG"/>
+        <createTable tableName="TAGS">
+            <column name="ID" type="int" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="TAG_KEY" type="varchar(255)"/>
+            <column name="TAG_VALUE" type="varchar(255)"/>
+            <column name="MEDIA_UUID" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="DATE_CREATED" type="TIMESTAMP" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        <addForeignKeyConstraint constraintName="FK_TAGS_MEDIA"
+                                 baseTableName="TAGS" baseColumnNames="MEDIA_UUID"
+                                 referencedTableName="MEDIA" referencedColumnNames="UUID"
+        />
+    </changeSet>
+        
 </databaseChangeLog>
