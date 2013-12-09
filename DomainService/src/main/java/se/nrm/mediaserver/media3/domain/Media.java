@@ -3,6 +3,7 @@ package se.nrm.mediaserver.media3.domain;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.LinkedList;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -148,6 +149,21 @@ public abstract class Media implements Serializable {
     public void setTags(Collection<Tag> tags) {
         this.tags = tags;
     }
+    
+    public boolean addTag(Tag tag) {
+        if (tags == null) {
+            tags = new LinkedList<Tag>();
+        }
+        if (tag != null && !tags.contains(tag)) {
+            tags.add(tag);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removeTag(Tag tag) {
+        return (tags != null && !tags.isEmpty() && tags.remove(tag));
+    }
 
     public Collection<Determination> getDeterminations() {
         if (determinations != null) {
@@ -160,30 +176,22 @@ public abstract class Media implements Serializable {
     public void setDeterminations(Collection<Determination> determinations) {
         this.determinations = determinations;
     }
+    
+    public boolean addDetermination(Determination determination) {
+        if (determinations == null) {
+            determinations = new LinkedList<Determination>();
+        }
+        if (determination != null && !determinations.contains(determination)) {
+            determinations.add(determination);
+            return true;
+        }
+        return false;
+    }
 
-//    public List<Tag> getTags() {
-//        if (tags != null) {
-//            tags.size(); // this is needed for IndirectList: not instantiated 
-//            return Collections.unmodifiableList(tags);
-//        } else {
-//            return Collections.<Tag>emptyList();
-//        }
-//    }
-//
-//    public boolean addTag(Tag tag) {
-//        if (tags == null) {
-//            tags = new LinkedList<Tag>();
-//        }
-//        if (tag != null && !tags.contains(tag)) {
-//            tags.add(tag);
-//            return true;
-//        }
-//        return false;
-//    }
-//
-//    public boolean removeTag(Tag tag) {
-//        return (tags != null && !tags.isEmpty() && tags.remove(tag));
-//    }
+    public boolean removeDetermination(Determination determination) {
+        return (determinations != null && !determinations.isEmpty() && determinations.remove(determination));
+    }
+
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder();

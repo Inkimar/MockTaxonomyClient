@@ -67,12 +67,18 @@ public class Tag implements Serializable {
     public Tag(Integer id) {
         this.id = id;
     }
+//
+//    public Tag(Integer id, Date dateCreated) {
+//        this.id = id;
+//        this.dateCreated = dateCreated;
+//    }
 
-    public Tag(Integer id, Date dateCreated) {
-        this.id = id;
-        this.dateCreated = dateCreated;
+    public Tag( String tagKey, String tagValue, Media media) {
+        this.tagKey = tagKey;
+        this.tagValue = tagValue;
+        this.media = media;
     }
-
+    
     public Integer getId() {
         return id;
     }

@@ -84,10 +84,19 @@ public class Determination implements Serializable {
         this.id = id;
     }
 
-    public Determination(Integer id, Date dateCreated) {
-        this.id = id;
-        this.dateCreated = dateCreated;
+//    public Determination(Integer id, Date dateCreated) {
+//        this.id = id;
+//        this.dateCreated = dateCreated;
+//    }
+    public Determination(String tagKey, String tagValue, String externalSystem, String externalSystemUrl, Media mediaUuid) {
+        this.tagKey = tagKey;
+        this.tagValue = tagValue;
+        this.externalSystem = externalSystem;
+        this.externalSystemUrl = externalSystemUrl;
+        this.mediaUuid = mediaUuid;
     }
+    
+    
 
     public Integer getId() {
         return id;
