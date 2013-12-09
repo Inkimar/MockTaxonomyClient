@@ -5,9 +5,7 @@ package se.nrm.mediaserver.restful;
  * @author ingimar
  */
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.URI;
 import java.util.List;
 import java.util.UUID;
 import java.util.logging.Level;
@@ -22,15 +20,10 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import javax.xml.bind.JAXBElement;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
-import se.nrm.mediaserver.media3.domain.Bubble;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
-import se.nrm.mediaserver.media3.domain.Tag;
 import se.nrm.mediaserver.service.MediaService;
-import se.nrm.mediaserver.util.FilePropertiesHelper;
-import se.nrm.mediaserver.util.FileSystemRemoteWriter;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 import se.nrm.mediaserver.util.MimeParser;
 import se.nrm.mediaserver.util.PathHelper;

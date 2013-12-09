@@ -12,7 +12,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
-import se.nrm.mediaserver.util.FilePropertiesHelper;
 
 //
 import java.awt.Graphics2D;
@@ -24,6 +23,7 @@ import se.nrm.mediaserver.util.PathHelper;
 
 /**
  * http://localhost:8080/MediaServerResteasy/media/stream/84a6ad8b-3d9f-4f75-b856-44e23b002327
+ *
  * @author ingimar
  */
 @Path("/media")
@@ -51,7 +51,7 @@ public class MediaResourceFetchService {
     public Response getMediaSmall(@PathParam("uuid") String fileName) {
         String dynPath = getDynamicPath(fileName);
         String file = dynPath.concat(fileName);
-        System.out.println("filename "+fileName);
+        System.out.println("filename " + fileName);
         // test to save, you could return the thumb without saving
         if (!file.endsWith(".thumb")) {
             savesThumbfil(file);
@@ -73,7 +73,6 @@ public class MediaResourceFetchService {
 
     private void savesThumbfil(String file) {
 
-        
         // returnera on-the-fly , kan inte köra in BufferedImage hit ->  return Response.ok(new FileInputStream(file)).build();
         try {
 
