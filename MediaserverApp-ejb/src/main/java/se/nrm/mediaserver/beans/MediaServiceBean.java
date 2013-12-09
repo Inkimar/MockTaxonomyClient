@@ -24,14 +24,6 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
     @PersistenceContext(unitName = "MysqlPU")
     private EntityManager em;
 
-  
-    @Override
-    public String getServerDate() {
-        System.out.println("Metoden getServerDate");
-        Date date = new Date();
-        return "EJB-bean says Hello. Servertime is " + date.toString();
-    }
-
     /**
      * using an interceptor, @Profiled, to measure time.
      * @param media 
@@ -59,14 +51,21 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         return image;
     }
 
-     @Override
-     public List<Image> getAll() {
-         return Collections.EMPTY_LIST;
-     }
-//    @Override
-//    public List<Image> getAll() {
-//        Query query = em.createNamedQuery(Image.FIND_ALL);
-//        List<Image> images = query.getResultList();
-//        return images;
-//    }
+    /**
+     * Should introduce 'paging', in case they are too many
+     * @return 
+     */
+    @Override
+    public List<Image> getAll() {
+        Query query = em.createNamedQuery(Media.FIND_ALL);
+        List<Image> images = query.getResultList();
+        return images;
+    }
+    
+    @Override
+    public String getServerDate() {
+        System.out.println("Metoden getServerDate");
+        Date date = new Date();
+        return "EJB-bean says Hello. Servertime is " + date.toString();
+    }
 }
