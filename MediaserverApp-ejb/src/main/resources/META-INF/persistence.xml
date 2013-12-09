@@ -9,6 +9,7 @@
         <class>se.nrm.mediaserver.media3.domain.MediaText</class>
         <class>se.nrm.mediaserver.media3.domain.MetaData</class>
         <class>se.nrm.mediaserver.media3.domain.Tag</class>
+        <class>se.nrm.mediaserver.media3.domain.Determination</class>
     </persistence-unit> 
     <!--    <persistence-unit name="PostgrePU" transaction-type="JTA">
         <jta-data-source>jdbc/__nrmPostgresPool</jta-data-source>
