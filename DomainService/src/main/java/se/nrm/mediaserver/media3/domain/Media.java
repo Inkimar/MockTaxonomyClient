@@ -63,6 +63,12 @@ public abstract class Media implements Serializable {
     @XmlElement(name = "tag", required = true)
     private Collection<Tag> tags;
 
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "mediaUuid",
+            targetEntity = Determination.class, fetch = FetchType.EAGER)
+    @XmlElementWrapper(name = "systems")
+    @XmlElement(name = "system", required = true)
+    private Collection<Determination> determinations;
+
 //    @Embedded
 //    private MediaText mediaText;
     public Media() {
@@ -141,6 +147,18 @@ public abstract class Media implements Serializable {
 
     public void setTags(Collection<Tag> tags) {
         this.tags = tags;
+    }
+
+    public Collection<Determination> getDeterminations() {
+        if (determinations != null) {
+            return Collections.unmodifiableCollection(determinations);
+        } else {
+            return Collections.<Determination>emptyList();
+        }
+    }
+
+    public void setDeterminations(Collection<Determination> determinations) {
+        this.determinations = determinations;
     }
 
 //    public List<Tag> getTags() {

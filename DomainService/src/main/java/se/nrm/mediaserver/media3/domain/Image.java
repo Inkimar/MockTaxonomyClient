@@ -20,6 +20,8 @@ public class Image extends Media implements Serializable {
 
 //    public static final String FIND_ALL = "Image.findAll";
     
+    
+    
     public Image() {
     }
 

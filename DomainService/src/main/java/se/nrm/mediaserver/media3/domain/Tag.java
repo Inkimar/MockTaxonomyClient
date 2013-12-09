@@ -26,27 +26,18 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ingimar
  */
 @Entity
-@Table(name = "TAG")
+@Table(name = "TAGS")
 @NamedQueries({
-    @NamedQuery(name = "Tag.findAll",
-            query = "SELECT t FROM Tag t"),
-    @NamedQuery(name = "Tag.findById",
-            query = "SELECT t FROM Tag t WHERE t.id = :id"),
-    @NamedQuery(name = "Tag.findByTagKey",
-            query = "SELECT t FROM Tag t WHERE t.tagKey = :tagKey"),
-    @NamedQuery(name = "Tag.findByTagPointer",
-            query = "SELECT t FROM Tag t WHERE t.tagPointer = :tagPointer"),
-    @NamedQuery(name = "Tag.findByExternalSystem",
-            query = "SELECT t FROM Tag t WHERE t.externalSystem = :externalSystem")
-//        ,
-//    @NamedQuery(name = "Tag.findByDateCreated",
-//            query = "SELECT t FROM Tag t WHERE t.dateCreated = :dateCreated")
+    @NamedQuery(name = "Tag.findAll", query = "SELECT t FROM Tag t"),
+    @NamedQuery(name = "Tag.findById", query = "SELECT t FROM Tag t WHERE t.id = :id"),
+    @NamedQuery(name = "Tag.findByTagKey", query = "SELECT t FROM Tag t WHERE t.tagKey = :tagKey"),
+    @NamedQuery(name = "Tag.findByTagValue", query = "SELECT t FROM Tag t WHERE t.tagValue = :tagValue")
 })
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement
 public class Tag implements Serializable {
 
-    private static final long serialVersionUID = 2L;
+    private static final long serialVersionUID = 4L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,17 +49,9 @@ public class Tag implements Serializable {
     @Column(name = "TAG_KEY")
     private String tagKey;
 
-    @Size(max = 245)
-    @Column(name = "TAG_POINTER")
-    private String tagPointer;
-
     @Size(max = 255)
-    @Column(name = "EXTERNAL_SYSTEM")
-    private String externalSystem;
-    
-    @Size(max = 255)
-    @Column(name = "WEBSERVICE_URL")
-    private String webserviceURL;
+    @Column(name = "TAG_VALUE")
+    private String tagValue;
 
     @Transient
     private Date dateCreated;
@@ -77,7 +60,7 @@ public class Tag implements Serializable {
     @JoinColumn(name = "MEDIA_UUID")
     @XmlTransient
     private Media media;
-
+    
     public Tag() {
     }
 
@@ -106,20 +89,12 @@ public class Tag implements Serializable {
         this.tagKey = tagKey;
     }
 
-    public String getTagPointer() {
-        return tagPointer;
+    public String getTagValue() {
+        return tagValue;
     }
 
-    public void setTagPointer(String tagPointer) {
-        this.tagPointer = tagPointer;
-    }
-
-    public String getExternalSystem() {
-        return externalSystem;
-    }
-
-    public void setExternalSystem(String externalSystem) {
-        this.externalSystem = externalSystem;
+    public void setTagValue(String tagValue) {
+        this.tagValue = tagValue;
     }
 
     public Date getDateCreated() {
@@ -129,16 +104,6 @@ public class Tag implements Serializable {
     public void setDateCreated(Date dateCreated) {
         this.dateCreated = dateCreated;
     }
-
-    public String getWebserviceURL() {
-        return webserviceURL;
-    }
-
-    public void setWebserviceURL(String webserviceURL) {
-        this.webserviceURL = webserviceURL;
-    }
-    
-    
 
     public Media getMedia() {
         return media;
@@ -155,8 +120,7 @@ public class Tag implements Serializable {
         sb.append("Media:");
         sb.append(", id='").append(id).append('\'');
         sb.append(", tagKey='").append(tagKey).append('\'');
-        sb.append(", tagPointer='").append(tagPointer).append('\'');
-        sb.append(", externalSystem='").append(externalSystem).append('\'');
+        sb.append(", tagValue='").append(tagValue).append('\'');
         sb.append(", dateCreated='").append(dateCreated).append('\'');
         sb.append('}');
         return sb.toString();
