@@ -8,9 +8,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
 import se.nrm.mediaserver.beans.util.Profiled;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
@@ -35,8 +32,12 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         return "EJB-bean says Hello. Servertime is " + date.toString();
     }
 
+    /**
+     * using an interceptor, @Profiled, to measure time.
+     * @param media 
+     */
     @Override   
-    @Profiled // interceptorn som ska ta tiden, log4j inställningar kvar
+    @Profiled
     public void save(T media) {
         em.merge(media);
     }
