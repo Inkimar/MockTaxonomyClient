@@ -28,7 +28,7 @@ import se.nrm.mediaserver.util.PathHelper;
  */
 @Path("/media")
 @Produces("image/png")
-public class MediaResourceFetchService {
+public class MediaResourceFetchBinary {
 
     @GET
     @Path("/stream/{uuid}")

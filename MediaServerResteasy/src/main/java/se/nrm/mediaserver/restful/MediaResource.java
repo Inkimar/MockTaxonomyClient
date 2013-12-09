@@ -12,13 +12,12 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import se.nrm.mediaserver.media3.domain.Image;
 
 /**
- * (1) först Image , sen annan media - använd <T>
  *
  * @author ingimar
  */
 public interface MediaResource {
 
-    public Response createNewFile(@MultipartForm FileUploadForm form);
+   // public Response createNewFile(@MultipartForm FileUploadForm form);
 
     public Image getMediaAsXML(@PathParam("uuid") String uuid);
     // public void putMediaMetaData(@PathParam("uuid") String uuid, @QueryParam("name") String name);

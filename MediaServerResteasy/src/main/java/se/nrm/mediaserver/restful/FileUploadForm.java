@@ -1,7 +1,7 @@
 package se.nrm.mediaserver.restful;
 
 /**
- *
+ * Using the RestEasy-Implementation of JPA.
  * @author ingimar
  */
 import javax.ws.rs.FormParam;
