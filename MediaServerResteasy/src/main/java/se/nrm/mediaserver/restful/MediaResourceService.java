@@ -21,8 +21,10 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import se.nrm.mediaserver.media3.domain.Determination;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
+import se.nrm.mediaserver.media3.domain.Tag;
 import se.nrm.mediaserver.service.MediaService;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 import se.nrm.mediaserver.util.MimeParser;
@@ -78,6 +80,15 @@ public class MediaResourceService implements MediaResource {
         media.setMimetype(mimeType);
         media.setOwner(form.getOwner());
         media.setVisibility(form.getAccess());
+        
+        // testing
+//        Tag tag1 = new Tag("vy", "vänster", media);
+//        Tag tag2 = new Tag("helper", "nisse", media);
+//        media.addTag(tag1);
+//        media.addTag(tag2);
+//        
+//        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", media);
+//        media.addDetermination(d);
 
         writeToDatabase(media);
 
