@@ -14,7 +14,9 @@ import javax.persistence.InheritanceType;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -31,7 +33,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "MEDIA")
 @NamedQueries({
-    @NamedQuery(name = Media.FIND_BY_UUID, query = "SELECT c FROM Media c  where c.uuid = :uuid")
+    @NamedQuery(name = Media.FIND_BY_UUID, query = "SELECT c FROM Media c  where c.uuid = :uuid"),
+    @NamedQuery(name = Media.FIND_ALL, query = "SELECT m FROM Media m")
 })
 @XmlAccessorType(value = XmlAccessType.FIELD)
 @XmlRootElement
@@ -41,6 +44,8 @@ public abstract class Media implements Serializable {
     private static final long serialVersionUID = -863604661852460140L;
 
     public static final String FIND_BY_UUID = "Media.FindByUuid";
+
+    public static final String FIND_ALL = "Media.findAll";
 
     @Id
     @Column(name = "UUID")
@@ -149,7 +154,7 @@ public abstract class Media implements Serializable {
     public void setTags(Collection<Tag> tags) {
         this.tags = tags;
     }
-    
+
     public boolean addTag(Tag tag) {
         if (tags == null) {
             tags = new LinkedList<Tag>();
@@ -176,7 +181,7 @@ public abstract class Media implements Serializable {
     public void setDeterminations(Collection<Determination> determinations) {
         this.determinations = determinations;
     }
-    
+
     public boolean addDetermination(Determination determination) {
         if (determinations == null) {
             determinations = new LinkedList<Determination>();
