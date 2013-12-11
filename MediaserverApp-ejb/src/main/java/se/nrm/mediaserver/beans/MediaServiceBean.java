@@ -11,6 +11,8 @@ import javax.persistence.Query;
 import se.nrm.mediaserver.beans.util.Profiled;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
+import se.nrm.mediaserver.media3.domain.Sound;
+import se.nrm.mediaserver.media3.domain.Video;
 import se.nrm.mediaserver.service.MediaService;
 
 /**
@@ -26,34 +28,36 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
 
     /**
      * using an interceptor, @Profiled, to measure time.
-     * @param media 
+     *
+     * @param media
      */
-    @Override   
+    @Override
     @Profiled
     public void save(T media) {
         em.merge(media);
     }
-    
+
     @Override
     public void delete(String uuid) {
-       T fetchedEntity = get(uuid);
-       em.remove(fetchedEntity);
+        T fetchedEntity = get(uuid);
+        em.remove(fetchedEntity);
     }
 
     @Override
     public T get(String uuid) {
-        System.out.println("Again uuid "+uuid);
+        System.out.println("Again uuid " + uuid);
         Query namedQuery = em.createNamedQuery(Media.FIND_BY_UUID);
         namedQuery.setParameter("uuid", uuid);
-        
+
         T image = (T) namedQuery.getSingleResult();
-       
+
         return image;
     }
 
     /**
      * Should introduce 'paging', in case they are too many
-     * @return 
+     *
+     * @return
      */
     @Override
     public List<Image> getAll() {
@@ -61,11 +65,37 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         List<Image> images = query.getResultList();
         return images;
     }
+
     
+    // @TODO , Slå ihop alla getAll till en ....
+    @Override
+    public List getAllImages() {
+        Query query = em.createNamedQuery(Image.FIND_ALL_IMAGES);
+        List<Image> images = query.getResultList();
+        return images;
+    }
+
+    @Override
+    public List getAllSounds() {
+        Query query = em.createNamedQuery(Sound.FIND_ALL_SOUNDS);
+        List<Sound> sounds = query.getResultList();
+        return sounds;
+    }
+
+    @Override
+    public List getAllVideos() {
+        Query query = em.createNamedQuery(Video.FIND_ALL_VIDEOS);
+        List<Video> videos = query.getResultList();
+        return videos;
+    }
+    
+    
+
     @Override
     public String getServerDate() {
         System.out.println("Metoden getServerDate");
         Date date = new Date();
         return "EJB-bean says Hello. Servertime is " + date.toString();
     }
+
 }
