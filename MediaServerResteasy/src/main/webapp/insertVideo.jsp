@@ -4,8 +4,8 @@
 
 <html>
     <body>
-        <h1>Image - JAX-RS File Upload Example</h1>
-        <form action="media/upload-file" method="post" enctype="multipart/form-data">
+        <h1>Video - JAX-RS File Upload Example</h1>
+        <form action="media/upload-video" method="post" enctype="multipart/form-data">
             <p>
                 Owner : <input type="text" name="owner" /></br>
             </p>
