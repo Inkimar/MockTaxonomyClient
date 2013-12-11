@@ -5,6 +5,8 @@
         <jta-data-source>jdbc/__nrmMin</jta-data-source>
         <!--<jta-data-source>jdbc/__liq</jta-data-source>-->
         <class>se.nrm.mediaserver.media3.domain.Image</class>
+        <class>se.nrm.mediaserver.media3.domain.Video</class>
+        <class>se.nrm.mediaserver.media3.domain.Sound</class>
         <class>se.nrm.mediaserver.media3.domain.Media</class>
         <class>se.nrm.mediaserver.media3.domain.MediaText</class>
         <class>se.nrm.mediaserver.media3.domain.MetaData</class>
