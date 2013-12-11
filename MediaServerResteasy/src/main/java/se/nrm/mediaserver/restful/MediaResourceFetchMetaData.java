@@ -14,6 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import se.nrm.mediaserver.media3.domain.Image;
+import se.nrm.mediaserver.media3.domain.Sound;
+import se.nrm.mediaserver.media3.domain.Video;
 import se.nrm.mediaserver.service.MediaService;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 
@@ -30,24 +32,32 @@ public class MediaResourceFetchMetaData implements MediaResource {
 
     final MediaService bean = JNDIFetchRemote.outreach();
 
-    /**
-     * Fetch metadata from database
-     *
-     * @param uuid
-     * @return
-     */
+ 
     @GET
     @Path("/image/{uuid}")
     @Override
-    public Image getMediaAsXML(@PathParam("uuid") String uuid) {
+    public Image getImageAsXML(@PathParam("uuid") String uuid) {
         Image image = (Image) bean.get(uuid);
         System.out.println("Image is " + image);
         return image;
     }
+    @GET
+    @Path("/video/{uuid}")
+    @Override
+    public Video getVideoAsXML(@PathParam("uuid") String uuid) {
+        Video video = (Video) bean.get(uuid);
+        System.out.println("Image is " + video);
+        return video;
+    }
+    @GET
+    @Path("/sound/{uuid}")
+    @Override
+    public Sound getSoundAsXML(@PathParam("uuid") String uuid) {
+        Sound sound = (Sound) bean.get(uuid);
+        System.out.println("Image is " + sound);
+        return sound;
+    }
 
-    /**
-     * @param uuid
-     */
     @DELETE
     @Path("/image/{uuid}")
     @Override
@@ -60,8 +70,22 @@ public class MediaResourceFetchMetaData implements MediaResource {
     @Produces("text/plain")
     public List getAllMediaMetaData() {
         List<Image> images = bean.getAll();
-
         return images;
+    }
+    
+    @GET
+    @Path("/allImages")
+    @Produces("text/plain")
+    public List getAllImagesMetaData() {
+        List<Image> images = bean.getAllImages();
+        return images;
+    }
+    @GET
+    @Path("/allVideos")
+    @Produces("text/plain")
+    public List getAllVideosMetaData() {
+        List<Video> videos = bean.getAllVideos();
+        return videos;
     }
 
     @GET

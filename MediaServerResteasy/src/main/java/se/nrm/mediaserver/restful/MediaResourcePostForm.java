@@ -19,7 +19,9 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import se.nrm.mediaserver.media3.domain.Determination;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
+import se.nrm.mediaserver.media3.domain.Sound;
 import se.nrm.mediaserver.media3.domain.Tag;
+import se.nrm.mediaserver.media3.domain.Video;
 import se.nrm.mediaserver.service.MediaService;
 import se.nrm.mediaserver.util.FileSystemWriter;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
@@ -88,16 +90,95 @@ public class MediaResourcePostForm {
 
         return Response.status(200).entity(responseOutput).build();
     }
+    
+    @POST
+    @Path("/upload-video")
+    @Consumes("multipart/form-data")
+    @Produces("text/plain")
+    public Response createNewVideoFile(@MultipartForm FileUploadForm form) {
+
+        String uuIdFilename = getUUID();
+
+        String uploadedFileLocation = absolutePathToFile(uuIdFilename);
+        writeToFile(form, uploadedFileLocation);
+
+        File fileHandle = new File(uploadedFileLocation);
+        String mimeType = "unkown";
+        try {
+            mimeType = MimeParser.getMimeFromFileContentAndExtension(fileHandle, uuIdFilename);
+
+        } catch (IOException ioEx) {
+            Logger.getLogger(MediaResourceFetchMetaData.class.getName()).log(Level.SEVERE, null, ioEx);
+        }
+
+        // beroende vilken Media det är ...
+        Media media = new Video();
+        media.setUuid(uuIdFilename);
+        media.setFilename(form.getFileName());
+        media.setMimetype(mimeType);
+        media.setOwner(form.getOwner());
+        media.setVisibility(form.getAccess());
+
+        // testing
+        Tag tag1 = new Tag("genus", "hona", media);
+        media.addTag(tag1);
+        
+        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", media);
+        media.addDetermination(d);
+        writeToDatabase(media);
+
+        String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
+
+        return Response.status(200).entity(responseOutput).build();
+    }
+    @POST
+    @Path("/upload-sound")
+    @Consumes("multipart/form-data")
+    @Produces("text/plain")
+    public Response createNewSoundFile(@MultipartForm FileUploadForm form) {
+
+        String uuIdFilename = getUUID();
+
+        String uploadedFileLocation = absolutePathToFile(uuIdFilename);
+        writeToFile(form, uploadedFileLocation);
+
+        File fileHandle = new File(uploadedFileLocation);
+        String mimeType = "unkown";
+        try {
+            mimeType = MimeParser.getMimeFromFileContentAndExtension(fileHandle, uuIdFilename);
+
+        } catch (IOException ioEx) {
+            Logger.getLogger(MediaResourceFetchMetaData.class.getName()).log(Level.SEVERE, null, ioEx);
+        }
+
+        // beroende vilken Media det är ...
+        Media media = new Sound();
+        media.setUuid(uuIdFilename);
+        media.setFilename(form.getFileName());
+        media.setMimetype(mimeType);
+        media.setOwner(form.getOwner());
+        media.setVisibility(form.getAccess());
+
+        // testing
+        Tag tag1 = new Tag("genus", "hona", media);
+        media.addTag(tag1);
+        
+        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", media);
+        media.addDetermination(d);
+        writeToDatabase(media);
+
+        String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
+
+        return Response.status(200).entity(responseOutput).build();
+    }
 
     private String absolutePathToFile(String uuid) {
         return PathHelper.getDynamicUUUIDFile(uuid);
     }
 
-    // @TODO Should be the responsibility of the bean.
     private void writeToFile(FileUploadForm form, String location) {
 
         Writeable writer = new FileSystemWriter();
-        System.out.println("testing ");
         writer.writeBytesTo(form.getFileData(), location);
     }
 

@@ -60,12 +60,13 @@ public class MediaResourceFetchBinary {
         return returnFile(repositoryFile);
     }
 
+    // måste jag checka mime-type ? // audio/ogg, ( video/mp4 - funkar utan ändelse på fil -) 
     private static Response returnFile(File file) {
         if (!file.exists()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         try {
-            return Response.ok(new FileInputStream(file)).build();
+            return Response.ok(new FileInputStream(file),"video/mp4").build(); 
         } catch (FileNotFoundException ex) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
