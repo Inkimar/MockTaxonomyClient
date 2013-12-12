@@ -66,7 +66,7 @@ public class MediaResourceFetchBinary {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         try {
-            return Response.ok(new FileInputStream(file),"video/mp4").build(); 
+            return Response.ok(new FileInputStream(file),"audio/ogg").build(); 
         } catch (FileNotFoundException ex) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }

@@ -112,20 +112,24 @@ public class MediaResourcePostForm {
         }
 
         // beroende vilken Media det är ...
-        Media media = new Video();
-        media.setUuid(uuIdFilename);
-        media.setFilename(form.getFileName());
-        media.setMimetype(mimeType);
-        media.setOwner(form.getOwner());
-        media.setVisibility(form.getAccess());
+        Video video=  new Video();
+        video.setUuid(uuIdFilename);
+        video.setFilename(form.getFileName());
+        video.setMimetype(mimeType);
+        video.setOwner(form.getOwner());
+        video.setVisibility(form.getAccess());
+        
+        // 
+        video.setStartTime(15);
+        video.setEndTime(25);
 
         // testing
-        Tag tag1 = new Tag("genus", "hona", media);
-        media.addTag(tag1);
+        Tag tag1 = new Tag("genus", "hona", video);
+        video.addTag(tag1);
         
-        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", media);
-        media.addDetermination(d);
-        writeToDatabase(media);
+        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", video);
+        video.addDetermination(d);
+        writeToDatabase(video);
 
         String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
 
@@ -152,20 +156,24 @@ public class MediaResourcePostForm {
         }
 
         // beroende vilken Media det är ...
-        Media media = new Sound();
-        media.setUuid(uuIdFilename);
-        media.setFilename(form.getFileName());
-        media.setMimetype(mimeType);
-        media.setOwner(form.getOwner());
-        media.setVisibility(form.getAccess());
+        Sound sound = new Sound();
+        sound.setUuid(uuIdFilename);
+        sound.setFilename(form.getFileName());
+        sound.setMimetype(mimeType);
+        sound.setOwner(form.getOwner());
+        sound.setVisibility(form.getAccess());
+        sound.setStartTime(10);
+        sound.setEndTime(35);
+        
+        
 
         // testing
-        Tag tag1 = new Tag("genus", "hona", media);
-        media.addTag(tag1);
+        Tag tag1 = new Tag("genus", "hona", sound);
+        sound.addTag(tag1);
         
-        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", media);
-        media.addDetermination(d);
-        writeToDatabase(media);
+        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", sound);
+        sound.addDetermination(d);
+        writeToDatabase(sound);
 
         String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
 
