@@ -19,30 +19,24 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "SOUND")
 @NamedQueries({
-    @NamedQuery(name = Sound.FIND_ALL_SOUNDS, query = "SELECT s FROM Sound s"),
-//    @NamedQuery(name = "Sound.findByUuid", query = "SELECT s FROM Sound s WHERE s.uuid = :uuid"),
+    @NamedQuery(name = Sound.FIND_ALL_SOUNDS, query = "SELECT s FROM Sound s"), //    @NamedQuery(name = "Sound.findByUuid", query = "SELECT s FROM Sound s WHERE s.uuid = :uuid"),
 //    @NamedQuery(name = "Sound.findByIsExported", query = "SELECT s FROM Sound s WHERE s.isExported = :isExported")
 })
 @XmlRootElement
-public class Sound extends Media implements Serializable {
+public class Sound extends Stream implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     public static final String FIND_ALL_SOUNDS = "Sound.findAll";
 
     public Sound() {
     }
-    
+
     public Sound(String owner) {
         super(owner);
     }
 
     public Sound(String owner, String visibility, String filename, String mimetype) {
         super(owner, visibility, filename, mimetype);
-    }
- 
-    @Override
-    public String toString() {
-        return "se.nrm.mediaserver.media3.domain.Sound[ ]";
     }
 }
