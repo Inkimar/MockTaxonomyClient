@@ -16,6 +16,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Response;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
+import se.nrm.mediaserver.media3.domain.Attachment;
 import se.nrm.mediaserver.media3.domain.Determination;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
@@ -81,7 +82,7 @@ public class MediaResourcePostForm {
         Tag tag2 = new Tag("helper", "nisse", media);
         media.addTag(tag1);
         media.addTag(tag2);
-        
+
         Determination d = new Determination("taxon", "ext-123", "mock-system", "http", media);
         media.addDetermination(d);
         writeToDatabase(media);
@@ -90,7 +91,7 @@ public class MediaResourcePostForm {
 
         return Response.status(200).entity(responseOutput).build();
     }
-    
+
     @POST
     @Path("/upload-video")
     @Consumes("multipart/form-data")
@@ -112,13 +113,13 @@ public class MediaResourcePostForm {
         }
 
         // beroende vilken Media det är ...
-        Video video=  new Video();
+        Video video = new Video();
         video.setUuid(uuIdFilename);
         video.setFilename(form.getFileName());
         video.setMimetype(mimeType);
         video.setOwner(form.getOwner());
         video.setVisibility(form.getAccess());
-        
+
         // 
         video.setStartTime(15);
         video.setEndTime(25);
@@ -126,7 +127,7 @@ public class MediaResourcePostForm {
         // testing
         Tag tag1 = new Tag("genus", "hona", video);
         video.addTag(tag1);
-        
+
         Determination d = new Determination("taxon", "ext-123", "mock-system", "http", video);
         video.addDetermination(d);
         writeToDatabase(video);
@@ -135,6 +136,7 @@ public class MediaResourcePostForm {
 
         return Response.status(200).entity(responseOutput).build();
     }
+
     @POST
     @Path("/upload-sound")
     @Consumes("multipart/form-data")
@@ -164,16 +166,55 @@ public class MediaResourcePostForm {
         sound.setVisibility(form.getAccess());
         sound.setStartTime(10);
         sound.setEndTime(35);
-        
-        
 
         // testing
         Tag tag1 = new Tag("genus", "hona", sound);
         sound.addTag(tag1);
-        
+
         Determination d = new Determination("taxon", "ext-123", "mock-system", "http", sound);
         sound.addDetermination(d);
         writeToDatabase(sound);
+
+        String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
+
+        return Response.status(200).entity(responseOutput).build();
+    }
+    @POST
+    @Path("/upload-attach")
+    @Consumes("multipart/form-data")
+    @Produces("text/plain")
+    public Response createNewAttachmentFile(@MultipartForm FileUploadForm form) {
+
+        String uuIdFilename = getUUID();
+
+        String uploadedFileLocation = absolutePathToFile(uuIdFilename);
+        writeToFile(form, uploadedFileLocation);
+
+        File fileHandle = new File(uploadedFileLocation);
+        String mimeType = "unkown";
+        try {
+            mimeType = MimeParser.getMimeFromFileContentAndExtension(fileHandle, uuIdFilename);
+
+        } catch (IOException ioEx) {
+            Logger.getLogger(MediaResourceFetchMetaData.class.getName()).log(Level.SEVERE, null, ioEx);
+        }
+
+        // beroende vilken Media det är ...
+        Attachment attachment = new Attachment();
+        attachment.setUuid(uuIdFilename);
+        attachment.setFilename(form.getFileName());
+        attachment.setMimetype(mimeType);
+        attachment.setOwner(form.getOwner());
+        attachment.setVisibility(form.getAccess());
+        
+
+        // testing
+        Tag tag1 = new Tag("genus", "hona", attachment);
+        attachment.addTag(tag1);
+
+        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", attachment);
+        attachment.addDetermination(d);
+        writeToDatabase(attachment);
 
         String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
 

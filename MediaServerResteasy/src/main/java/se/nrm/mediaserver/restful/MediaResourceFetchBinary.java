@@ -18,7 +18,10 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.imageio.ImageIO;
+import org.apache.tika.Tika;
 import se.nrm.mediaserver.util.PathHelper;
 
 /**
@@ -60,14 +63,16 @@ public class MediaResourceFetchBinary {
         return returnFile(repositoryFile);
     }
 
-    // måste jag checka mime-type ? // audio/ogg, ( video/mp4 - funkar utan ändelse på fil -) 
     private static Response returnFile(File file) {
+
         if (!file.exists()) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
         try {
-            return Response.ok(new FileInputStream(file),"audio/ogg").build(); 
-        } catch (FileNotFoundException ex) {
+            Tika tika = new Tika();
+            String mimeType = tika.detect(file);
+            return Response.ok(new FileInputStream(file), mimeType).build();
+        } catch (IOException ioEx) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
     }
@@ -106,7 +111,6 @@ public class MediaResourceFetchBinary {
         g.dispose();
 
         return resizedImage;
-
     }
 
     private String getDynamicPath(String uuid) {

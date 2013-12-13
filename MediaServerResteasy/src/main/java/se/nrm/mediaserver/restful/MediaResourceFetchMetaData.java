@@ -13,6 +13,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
+import se.nrm.mediaserver.media3.domain.Attachment;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Sound;
 import se.nrm.mediaserver.media3.domain.Video;
@@ -32,37 +33,35 @@ public class MediaResourceFetchMetaData implements MediaResource {
 
     final MediaService bean = JNDIFetchRemote.outreach();
 
- 
     @GET
     @Path("/image/{uuid}")
     @Override
     public Image getImageAsXML(@PathParam("uuid") String uuid) {
         Image image = (Image) bean.get(uuid);
-        System.out.println("Image is " + image);
         return image;
     }
+
     @GET
     @Path("/video/{uuid}")
     @Override
     public Video getVideoAsXML(@PathParam("uuid") String uuid) {
         Video video = (Video) bean.get(uuid);
-        System.out.println("Image is " + video);
         return video;
     }
+
     @GET
     @Path("/sound/{uuid}")
     @Override
     public Sound getSoundAsXML(@PathParam("uuid") String uuid) {
         Sound sound = (Sound) bean.get(uuid);
-        System.out.println("Image is " + sound);
         return sound;
     }
-
-    @DELETE
-    @Path("/image/{uuid}")
+    @GET
+    @Path("/attachment/{uuid}")
     @Override
-    public void deleteMediaMetaData(@PathParam("uuid") String uuid) {
-        bean.delete(uuid);
+    public Attachment getAttachmentAsXML(@PathParam("uuid") String uuid) {
+        Attachment attachment = (Attachment) bean.get(uuid);
+        return attachment;
     }
 
     @GET
@@ -72,7 +71,7 @@ public class MediaResourceFetchMetaData implements MediaResource {
         List<Image> images = bean.getAll();
         return images;
     }
-    
+
     @GET
     @Path("/allImages")
     @Produces("text/plain")
@@ -80,6 +79,7 @@ public class MediaResourceFetchMetaData implements MediaResource {
         List<Image> images = bean.getAllImages();
         return images;
     }
+
     @GET
     @Path("/allVideos")
     @Produces("text/plain")
@@ -88,10 +88,22 @@ public class MediaResourceFetchMetaData implements MediaResource {
         return videos;
     }
 
+    // <editor-fold defaultstate="collapsed" desc="@Deletion, not for now">
+    @DELETE
+    @Path("/image/{uuid}")
+    @Override
+    public void deleteMediaMetaData(@PathParam("uuid") String uuid) {
+        bean.delete(uuid);
+    }
+// </editor-fold>
+
+    // <editor-fold defaultstate="collapsed" desc="Testing purposes">
     @GET
+    @Path("/test")
     @Produces("text/plain")
     public String getTesting() {
         long millis = System.currentTimeMillis() % 1000;
-        return "Testar ... "+millis;
+        return "Testar ... " + millis;
     }
+// </editor-fold>
 }

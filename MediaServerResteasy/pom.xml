@@ -61,8 +61,7 @@
         <dependency>
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jaxb-provider</artifactId>
-            <version>3.0.4.Final</version> <!-- uppar den 22 nov kl 10:44-->
-            <!--<version>2.3.1.GA</version>-->
+            <version>3.0.4.Final</version> 
         </dependency>
         <!-- Multipart support -->
         <dependency>
@@ -76,7 +75,6 @@
             <groupId>org.jboss.resteasy</groupId>
             <artifactId>resteasy-jackson-provider</artifactId>
             <version>3.0.5.Final</version>
-            <!--<version>2.2.1.GA</version>-->
         </dependency>
        
         <!-- For better I/O control -->
@@ -92,7 +90,7 @@
         </dependency>
         
         <!-- Testing stand-alone jackrabbit , accessing remote repos -->
-        <dependency>
+<!--        <dependency>
             <groupId>javax.jcr</groupId>
             <artifactId>jcr</artifactId>
             <version>1.0</version>
@@ -101,7 +99,7 @@
             <groupId>org.apache.jackrabbit</groupId>
             <artifactId>jackrabbit-jcr-rmi</artifactId>
             <version>1.4</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>
