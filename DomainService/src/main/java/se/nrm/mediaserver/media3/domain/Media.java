@@ -71,7 +71,7 @@ public abstract class Media implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "mediaUuid",
             targetEntity = Determination.class, fetch = FetchType.EAGER)
-    @XmlElementWrapper(name = "systems")
+    @XmlElementWrapper(name = "externalsystems")
     @XmlElement(name = "system", required = true)
     private Collection<Determination> determinations;
 
