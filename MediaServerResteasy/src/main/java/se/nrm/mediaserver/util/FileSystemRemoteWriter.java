@@ -5,15 +5,15 @@
  */
 package se.nrm.mediaserver.util;
 
-import java.net.MalformedURLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import javax.jcr.Node;
-import javax.jcr.SimpleCredentials;
-import javax.jcr.Workspace;
-import org.apache.jackrabbit.rmi.repository.URLRemoteRepository;
+//import java.net.MalformedURLException;
+//import java.util.logging.Level;
+//import java.util.logging.Logger;
+//import javax.jcr.RepositoryException;
+//import javax.jcr.Session;
+//import javax.jcr.Node;
+//import javax.jcr.SimpleCredentials;
+//import javax.jcr.Workspace;
+//import org.apache.jackrabbit.rmi.repository.URLRemoteRepository;
 
 /**
  *
