@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
 
@@ -58,7 +59,7 @@ public class ProxyJerseyRestServlet extends HttpServlet {
                     + response.getStatus());
         }
         String xmlResult = response.getEntity(String.class);
-        org.jsoup.nodes.Document doc = Jsoup.parse(xmlResult, "", Parser.xmlParser());
+        Document doc = Jsoup.parse(xmlResult, "", Parser.xmlParser());
         String extUUID = doc.select("extUuid").text();
         
        return extUUID;
