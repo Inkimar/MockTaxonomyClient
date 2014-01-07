@@ -1,32 +1,28 @@
-package is.zanzibar.projekt.controller;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package is.zanzibar.projekt.controller;
 
-import java.io.BufferedReader;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
- * http://www.mkyong.com/webservices/jax-rs/restful-java-client-with-apache-httpclient/
- *  - 6januar, finns det en bättre 
- * - - se Clients här -> http://www.mkyong.com/tutorials/jax-rs-tutorials/
+ *
  * @author ingimar
  */
-@WebServlet(urlPatterns = {"/searchByName"})
-public class ProxyApacheRestServlet extends HttpServlet {
+//@WebServlet(name = "ProxyJerseyRestServlet", urlPatterns = {"/ProxyJerseyRestServlet"})
+@WebServlet(urlPatterns = {"/jersey/searchByName"})
+public class ProxyJerseyRestServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,8 +37,6 @@ public class ProxyApacheRestServlet extends HttpServlet {
             throws ServletException, IOException {
         String commonName = request.getParameter("name");
         String result = getFromRestfulService(commonName);
-        
-        //
 
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -61,31 +55,22 @@ public class ProxyApacheRestServlet extends HttpServlet {
     }
 
     private String getFromRestfulService(String name) throws IOException {
-        String uri = "http://localhost:8080/MockTaxonomy/webresources/mocktaxon/common/"+name;
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpGet getRequest = new HttpGet(uri);
-        getRequest.addHeader("accept", "application/xml");
+        final String uri = "http://localhost:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
 
-        HttpResponse response = httpClient.execute(getRequest);
+        Client client = Client.create();
+        WebResource webResource = client.resource(uri);
+        ClientResponse response = webResource.accept("application/xml")
+                .get(ClientResponse.class);
 
-        if (response.getStatusLine().getStatusCode() != 200) {
+        if (response.getStatus() != 200) {
             throw new RuntimeException("Failed : HTTP error code : "
-                    + response.getStatusLine().getStatusCode());
+                    + response.getStatus());
         }
 
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader((response.getEntity().getContent())));
-
-        String output;
-        StringBuilder buffer = new StringBuilder();
-        System.out.println("Output from Server .... \n");
-        while ((output = br.readLine()) != null) {
-            buffer.append(output);
-            System.out.println(output);
-        }
-        
-        return buffer.toString(); // with xml-info, does not show on page
+        String output = response.getEntity(String.class);
+        return output;
     }
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

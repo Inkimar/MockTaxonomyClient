@@ -26,6 +26,11 @@
             <artifactId>httpclient</artifactId>
             <version>4.2.3</version>
         </dependency>
+        <dependency>
+		<groupId>com.sun.jersey</groupId>
+		<artifactId>jersey-client</artifactId>
+		<version>1.17</version>
+	</dependency>
     </dependencies>
 
     <build>
