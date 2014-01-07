@@ -15,30 +15,31 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.jsoup.Jsoup;
+import org.jsoup.parser.Parser;
+
 
 /**
  *
  * @author ingimar
  */
-//@WebServlet(name = "ProxyJerseyRestServlet", urlPatterns = {"/ProxyJerseyRestServlet"})
 @WebServlet(urlPatterns = {"/jersey/searchByName"})
 public class ProxyJerseyRestServlet extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String commonName = request.getParameter("name");
-        String result = getFromRestfulService(commonName);
+        String argument = request.getParameter("name");
+        String result = getFromRestfulService(argument);
 
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
             out.println("<title>Servlet ProxyServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>You searched for  " + commonName + "</h1>");
-            out.println("<h1>You searched for  " + result + "</h1>");
+            out.println("<h1>uuid = " + result + " for "+argument +"</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -56,9 +57,11 @@ public class ProxyJerseyRestServlet extends HttpServlet {
             throw new RuntimeException("Failed : HTTP error code : "
                     + response.getStatus());
         }
-
-        String output = response.getEntity(String.class);
-        return output;
+        String xmlResult = response.getEntity(String.class);
+        org.jsoup.nodes.Document doc = Jsoup.parse(xmlResult, "", Parser.xmlParser());
+        String extUUID = doc.select("extUuid").text();
+        
+       return extUUID;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

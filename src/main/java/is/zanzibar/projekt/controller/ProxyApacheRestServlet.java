@@ -20,9 +20,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 
 /**
- * http://www.mkyong.com/webservices/jax-rs/restful-java-client-with-apache-httpclient/
- *  - 6januar, finns det en bättre 
- * - - se Clients här -> http://www.mkyong.com/tutorials/jax-rs-tutorials/
  * @author ingimar
  */
 @WebServlet(urlPatterns = {"/apache/searchByName"})
@@ -36,7 +33,6 @@ public class ProxyApacheRestServlet extends HttpServlet {
 
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -74,7 +70,7 @@ public class ProxyApacheRestServlet extends HttpServlet {
             System.out.println(output);
         }
         
-        return buffer.toString(); // with xml-info, does not show on page
+        return buffer.toString(); 
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
