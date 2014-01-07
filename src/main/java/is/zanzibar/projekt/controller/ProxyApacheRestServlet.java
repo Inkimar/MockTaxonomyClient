@@ -1,3 +1,5 @@
+package is.zanzibar.projekt.controller;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,8 +25,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
  * - - se Clients här -> http://www.mkyong.com/tutorials/jax-rs-tutorials/
  * @author ingimar
  */
-@WebServlet(urlPatterns = {"/search"})
-public class ProxyRestServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/searchByName"})
+public class ProxyApacheRestServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,7 +40,7 @@ public class ProxyRestServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String commonName = request.getParameter("name");
-        getFromApache(commonName);
+        String result = getFromApache(commonName);
         
         //
 
@@ -52,12 +54,13 @@ public class ProxyRestServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>You searched for  " + commonName + "</h1>");
+            out.println("<h1>You searched for  " + result + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
     }
 
-    private void getFromApache(String name) throws IOException {
+    private String getFromApache(String name) throws IOException {
         String uri = "http://localhost:8080/MockTaxonomy/webresources/mocktaxon/common/"+name;
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpGet getRequest = new HttpGet(uri);
@@ -74,10 +77,14 @@ public class ProxyRestServlet extends HttpServlet {
                 new InputStreamReader((response.getEntity().getContent())));
 
         String output;
+        StringBuilder buffer = new StringBuilder();
         System.out.println("Output from Server .... \n");
         while ((output = br.readLine()) != null) {
+            buffer.append(output);
             System.out.println(output);
         }
+        
+        return buffer.toString(); // with xml-info, does not show on page
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
