@@ -29,6 +29,7 @@ import se.nrm.mediaserver.util.PathHelper;
 /**
  * http://localhost:8080/MediaServerResteasy/media/stream/84a6ad8b-3d9f-4f75-b856-44e23b002327
  *
+ * possibility 
  * @author ingimar
  */
 @Path("/media")

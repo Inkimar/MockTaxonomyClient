@@ -19,6 +19,15 @@
             </plugin>
         </plugins>
     </build>
+<!--    <profiles>
+        <profile> 
+            <id>EJB</id>
+            <modules>
+                <module>MediaserverApp-ejb</module>
+                <module>MediaServerResteasy</module>
+            </modules>
+        </profile>
+    </profiles>-->
     <modules>
         <module>DomainService</module>
         <module>MediaserverApp-ear</module>
@@ -30,5 +39,5 @@
         <module>MediaServerRestful</module>
         <module>MediaServerResteasy</module>
         <!--<module>Mediaserver-database-management</module>-->
-  </modules>
+    </modules>
 </project>

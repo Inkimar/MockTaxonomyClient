@@ -10,13 +10,15 @@ public class PathHelper {
 
     /**
      * Creates the directory and saves the file.
+     *
      * @param uuid
-     * @return 
+     * @return
      */
     public static String getDynamicUUUIDFile(String uuid) {
         String pathen = getPath(uuid);
         File directory = new File(pathen);
-        boolean isDir = directory.mkdirs();
+        boolean isDir = false;
+        isDir = directory.mkdirs();
         return pathen.concat(uuid);
     }
 

@@ -5,8 +5,6 @@
  */
 package se.nrm.mediaserver.util;
 
-import se.nrm.mediaserver.restful.FileUploadForm;
-
 /**
  *
  * @author ingimar
