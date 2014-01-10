@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import se.nrm.mediaserver.beans.util.Profiled;
+import se.nrm.mediaserver.media3.domain.Determination;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Media;
 import se.nrm.mediaserver.media3.domain.Sound;
@@ -49,9 +50,21 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         Query namedQuery = em.createNamedQuery(Media.FIND_BY_UUID);
         namedQuery.setParameter("uuid", uuid);
 
-        T image = (T) namedQuery.getSingleResult();
+        T media = (T) namedQuery.getSingleResult();
 
-        return image;
+        return media;
+    }
+
+    @Override
+    public T getDetermination(String externalUUID) {
+        System.out.println("Again uuid " + externalUUID);
+        Query namedQuery = em.createNamedQuery(Determination.FIND_BY_EXTERNAL_TAG);
+        System.out.println("externalUUID is : "+externalUUID);
+        namedQuery.setParameter("tagValue", externalUUID);
+
+        T determination = (T) namedQuery.getSingleResult();
+
+        return determination;
     }
 
     /**
@@ -66,7 +79,6 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         return images;
     }
 
-    
     // @TODO , Slå ihop alla getAll till en ....
     @Override
     public List getAllImages() {
@@ -88,8 +100,6 @@ public class MediaServiceBean<T> implements MediaService<T>, Serializable {
         List<Video> videos = query.getResultList();
         return videos;
     }
-    
-    
 
     @Override
     public String getServerDate() {

@@ -14,7 +14,7 @@ public class JNDIFetchRemote {
 
     public static MediaService outreach() {
         MediaService bean = null;
-        String ip="172.16.23.30"; // 172.16.23.30,192.168.10.163
+        String ip="172.16.23.29"; // 172.16.23.30,192.168.10.163
         try {
             Properties jndiProps = new Properties();
             jndiProps.put("java.naming.factory.initial", "com.sun.enterprise.naming.impl.SerialInitContextFactory");

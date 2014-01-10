@@ -14,6 +14,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import se.nrm.mediaserver.media3.domain.Attachment;
+import se.nrm.mediaserver.media3.domain.Determination;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Sound;
 import se.nrm.mediaserver.media3.domain.Video;
@@ -21,6 +22,8 @@ import se.nrm.mediaserver.service.MediaService;
 import se.nrm.mediaserver.util.JNDIFetchRemote;
 
 /**
+ * http://localhost:8080/MediaServerResteasy/media/image/18ac3829-49bd-42ed-a975-0ba839167f33
+ *
  * @author ingimar
  */
 @Path("/media")
@@ -42,6 +45,14 @@ public class MediaResourceFetchMetaData implements MediaResource {
     }
 
     @GET
+    @Path("/determination/{extuuid}")
+    @Override
+    public Determination getDeterminationAsXML(@PathParam("extuuid") String extUUID) {
+        Determination determination = (Determination) bean.getDetermination(extUUID);
+        return determination;
+    }
+
+    @GET
     @Path("/video/{uuid}")
     @Override
     public Video getVideoAsXML(@PathParam("uuid") String uuid) {
@@ -56,6 +67,7 @@ public class MediaResourceFetchMetaData implements MediaResource {
         Sound sound = (Sound) bean.get(uuid);
         return sound;
     }
+
     @GET
     @Path("/attachment/{uuid}")
     @Override
@@ -106,4 +118,5 @@ public class MediaResourceFetchMetaData implements MediaResource {
         return "Testar ... " + millis;
     }
 // </editor-fold>
+
 }

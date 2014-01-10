@@ -92,6 +92,8 @@ public class MediaResourceFetchBinary {
     }
 
     /**
+     * Default values : 150x150
+     * 
      * Can this be used, is the syntax ok - with '?' in front of uuid
      * http://localhost:8080/MediaServerResteasy/media/stream/image/?uuid=18ac3829-49bd-42ed-a975-0ba839167f33&width=500&height=400
      * @param info

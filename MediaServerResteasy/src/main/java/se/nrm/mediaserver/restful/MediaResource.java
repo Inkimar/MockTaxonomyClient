@@ -10,6 +10,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Response;
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 import se.nrm.mediaserver.media3.domain.Attachment;
+import se.nrm.mediaserver.media3.domain.Determination;
 import se.nrm.mediaserver.media3.domain.Image;
 import se.nrm.mediaserver.media3.domain.Sound;
 import se.nrm.mediaserver.media3.domain.Video;
@@ -30,4 +31,7 @@ public interface MediaResource {
     // public void putMediaMetaData(@PathParam("uuid") String uuid, @QueryParam("name") String name);
 
     public void deleteMediaMetaData(@PathParam("uuid") String uuid);
+    
+    
+    public Determination getDeterminationAsXML(@PathParam("extuuid") String extuuid);
 }

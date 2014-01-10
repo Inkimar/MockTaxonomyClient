@@ -18,6 +18,9 @@ public interface MediaService<T extends Object> {
     void save(T media);
     void delete(String uuid); // might want the whole object ?
     T get(String uuid);
+    
+    T getDetermination(String uuid);
+    
     List getAll();
     List getAllImages();
     List getAllSounds();
