@@ -37,6 +37,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Determination.findById", query = "SELECT d FROM Determination d WHERE d.id = :id"),
     @NamedQuery(name = "Determination.findByTagKey", query = "SELECT d FROM Determination d WHERE d.tagKey = :tagKey"),
     @NamedQuery(name =  Determination.FIND_BY_EXTERNAL_TAG, query = "SELECT d FROM Determination d WHERE d.tagValue = :tagValue"),
+    @NamedQuery(name =  Determination.FIND_ONE_BY_EXTERNAL_TAG , 
+            query = "SELECT DISTINCT d FROM Determination d WHERE d.tagValue = :tagValue"),
     @NamedQuery(name = "Determination.findByExternalSystem", query = "SELECT d FROM Determination d WHERE d.externalSystem = :externalSystem"),
     @NamedQuery(name = "Determination.findByExternalSystemUrl", query = "SELECT d FROM Determination d WHERE d.externalSystemUrl = :externalSystemUrl")
     //    @NamedQuery(name = "Determination.findByDateCreated", query = "SELECT d FROM Determination d WHERE d.dateCreated = :dateCreated")
@@ -46,6 +48,7 @@ import javax.xml.bind.annotation.XmlTransient;
 public class Determination implements Serializable {
     
      public static final String FIND_BY_EXTERNAL_TAG = "Determination.findByTagValue";
+     public static final String FIND_ONE_BY_EXTERNAL_TAG = "Determination.findOneTagValue";
 
     private static final long serialVersionUID = 1L;
 
@@ -74,7 +77,7 @@ public class Determination implements Serializable {
     @Transient
     private Date dateCreated;
 
-    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "MEDIA_UUID")
     @XmlTransient
     private Media mediaUuid;
