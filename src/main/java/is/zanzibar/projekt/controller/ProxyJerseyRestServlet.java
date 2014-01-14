@@ -47,7 +47,8 @@ public class ProxyJerseyRestServlet extends HttpServlet {
     }
 
     private String getFromRestfulService(String name) throws IOException {
-        final String uri = "http://localhost:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
+        System.out.println("Running on Lenovo -> "+name+" <-, calling restful on HP");
+        final String uri = "http://172.16.23.12:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
 
         Client client = Client.create();
         WebResource webResource = client.resource(uri);

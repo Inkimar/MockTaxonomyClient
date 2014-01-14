@@ -1,77 +1,57 @@
-package is.zanzibar.projekt.controller;
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+package is.zanzibar.projekt.controller;
 
-import java.io.BufferedReader;
+import com.sun.jersey.api.client.Client;
+import com.sun.jersey.api.client.ClientResponse;
+import com.sun.jersey.api.client.WebResource;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.parser.Parser;
 
 /**
+ *
  * @author ingimar
  */
-@WebServlet(urlPatterns = {"/apache/searchByName"})
-public class ProxyApacheRestServlet extends HttpServlet {
+@WebServlet(name = "SimpleProxyJersey", urlPatterns = {"/SimpleProxyJersey"})
+public class SimpleProxyJersey extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String commonName = request.getParameter("name");
-        String result = getFromRestfulService(commonName);
-        
-        //
+        String argument = request.getParameter("name");
+        String result = getFromRestfulService(argument);
+        response.getWriter().write(result);
 
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ProxyServlet</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>You searched for  " + commonName + "</h1>");
-            out.println("<h1>You searched for  " + result + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
     }
 
     private String getFromRestfulService(String name) throws IOException {
+        System.out.println("Running on Lenovo -> " + name + " <-, calling restful on HP");
         final String uri = "http://172.16.23.12:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
-        
-        DefaultHttpClient httpClient = new DefaultHttpClient();
-        HttpGet getRequest = new HttpGet(uri);
-        getRequest.addHeader("accept", "application/xml");
 
-        HttpResponse response = httpClient.execute(getRequest);
+        Client client = Client.create();
+        WebResource webResource = client.resource(uri);
+        ClientResponse response = webResource.accept("application/xml")
+                .get(ClientResponse.class);
 
-        if (response.getStatusLine().getStatusCode() != 200) {
+        if (response.getStatus() != 200) {
             throw new RuntimeException("Failed : HTTP error code : "
-                    + response.getStatusLine().getStatusCode());
+                    + response.getStatus());
         }
+        String xmlResult = response.getEntity(String.class);
+        Document doc = Jsoup.parse(xmlResult, "", Parser.xmlParser());
+        String extUUID = doc.select("extUuid").text();
 
-        BufferedReader br = new BufferedReader(
-                new InputStreamReader((response.getEntity().getContent())));
-
-        String output;
-        StringBuilder buffer = new StringBuilder();
-        System.out.println("Output from Server .... \n");
-        while ((output = br.readLine()) != null) {
-            buffer.append(output);
-            System.out.println(output);
-        }
-        
-        return buffer.toString(); 
+        return extUUID;
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
