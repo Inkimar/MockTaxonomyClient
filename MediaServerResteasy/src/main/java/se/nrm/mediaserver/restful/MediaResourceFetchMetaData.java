@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import se.nrm.mediaserver.media3.domain.Attachment;
 import se.nrm.mediaserver.media3.domain.Determination;
@@ -44,12 +45,37 @@ public class MediaResourceFetchMetaData implements MediaResource {
         return image;
     }
 
+    /**
+     * Gives you the XML.
+     *
+     * @TODO, Does not give you Media - round-round - needs to be fixed
+     * @param extUUID
+     * @return
+     */
     @GET
-    @Path("/determination/{extuuid}")
+    @Path("/determination/xml/{extuuid}")
     @Override
     public Determination getDeterminationAsXML(@PathParam("extuuid") String extUUID) {
         Determination determination = (Determination) bean.getDetermination(extUUID);
         return determination;
+    }
+
+    /**
+     * Gives you the binary when sending in external-id as-it-is in tbl DETERMINATION
+     * 
+     * @param extUUID
+     * @return 
+     */
+    @GET
+    @Path("/determination/stream/{extuuid}")
+    @Override
+    public Response getMedia(@PathParam("extuuid") String extUUID) {
+        Determination determination = (Determination) bean.getDetermination(extUUID);
+        String uuid = determination.getMediaUuid().getUuid();
+        System.out.println("determination has this media_uuid = " + uuid);
+        MediaResourceFetchBinary bin = new MediaResourceFetchBinary();
+
+        return bin.getMedia(uuid);
     }
 
     @GET

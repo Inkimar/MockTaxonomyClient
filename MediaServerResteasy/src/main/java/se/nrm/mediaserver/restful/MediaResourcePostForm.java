@@ -47,7 +47,7 @@ public class MediaResourcePostForm {
      * impl.
      *
      * @param form
-     * @return
+     * @return UUID
      */
     @POST
     @Path("/upload-file")
@@ -83,11 +83,12 @@ public class MediaResourcePostForm {
         media.addTag(tag1);
         media.addTag(tag2);
 
-        Determination d = new Determination("taxon", "ext-123", "mock-system", "http", media);
+        String mockUUID = UUID.randomUUID().toString();
+        Determination d = new Determination("taxon", mockUUID,"mock-system", "http", media);
         media.addDetermination(d);
         writeToDatabase(media);
 
-        String responseOutput = "File uploaded/saved to : " + uploadedFileLocation;
+        String responseOutput = uuIdFilename;
 
         return Response.status(200).entity(responseOutput).build();
     }

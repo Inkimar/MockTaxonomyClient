@@ -24,6 +24,7 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 import net.coobird.thumbnailator.Thumbnails;
 import org.apache.tika.Tika;
+import se.nrm.mediaserver.media3.domain.Determination;
 import se.nrm.mediaserver.util.PathHelper;
 
 /**
@@ -45,7 +46,7 @@ public class MediaResourceFetchBinary {
         File repositoryFile = new File(file);
         return returnFile(repositoryFile);
     }
-
+    
     private static Response returnFile(File file) {
 
         if (!file.exists()) {

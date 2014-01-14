@@ -27,6 +27,7 @@ public interface MediaResource {
     public Sound getSoundAsXML(@PathParam("uuid") String uuid);
     public Video getVideoAsXML(@PathParam("uuid") String uuid);
     public Attachment getAttachmentAsXML(@PathParam("uuid") String uuid);
+    public Response getMedia(@PathParam("extuuid") String extUUID); 
     
     // public void putMediaMetaData(@PathParam("uuid") String uuid, @QueryParam("name") String name);
 
