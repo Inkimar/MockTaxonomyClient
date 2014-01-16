@@ -40,14 +40,21 @@ public class ProxyJerseyRestServlet extends HttpServlet {
             out.println("<title>Servlet ProxyServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>uuid = " + result + " for "+argument +"</h1>");
+            out.println(result);
             out.println("</body>");
             out.println("</html>");
         }
     }
+    
+    /**
+     * Using JSOUP for extracting an element from an XML-POST
+     * @param name
+     * @return
+     * @throws IOException 
+     */
 
     private String getFromRestfulService(String name) throws IOException {
-        System.out.println("Running on Lenovo -> "+name+" <-, calling restful on HP");
+        System.out.println("01- Running on Lenovo -> "+name+" <-, calling restful on HP");
         final String uri = "http://172.16.23.12:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
 
         Client client = Client.create();
@@ -63,7 +70,7 @@ public class ProxyJerseyRestServlet extends HttpServlet {
         Document doc = Jsoup.parse(xmlResult, "", Parser.xmlParser());
         String extUUID = doc.select("extUuid").text();
         
-       return extUUID;
+       return xmlResult;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
