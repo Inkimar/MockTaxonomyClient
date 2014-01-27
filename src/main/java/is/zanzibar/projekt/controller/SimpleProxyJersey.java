@@ -20,7 +20,8 @@ import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
 /**
- * retur av enast UUID : 02d2ef271-02ca-4934-860c-6c6a4ed043f9 
+ * retur av enast UUID : 02d2ef271-02ca-4934-860c-6c6a4ed043f9
+ *
  * @author ingimar
  */
 @WebServlet(name = "SimpleProxyJersey", urlPatterns = {"/SimpleProxyJersey"})
@@ -30,7 +31,9 @@ public class SimpleProxyJersey extends HttpServlet {
             throws ServletException, IOException {
         String argument = request.getParameter("name");
         String result = getFromRestfulService(argument);
-        response.getWriter().write(result);
+        String mediaserverURL = "http://localhost:8080/MediaServerResteasy/media/determination/stream/"+result;
+        System.out.println("mediaserverURL :"+mediaserverURL);
+        response.sendRedirect(mediaserverURL);
 
     }
 
