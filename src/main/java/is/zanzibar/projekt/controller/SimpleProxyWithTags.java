@@ -9,6 +9,7 @@ import com.sun.jersey.api.client.Client;
 import com.sun.jersey.api.client.ClientResponse;
 import com.sun.jersey.api.client.WebResource;
 import java.io.IOException;
+import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,29 +20,30 @@ import org.jsoup.nodes.Document;
 import org.jsoup.parser.Parser;
 
 /**
- * retur av enast UUID : 02d2ef271-02ca-4934-860c-6c6a4ed043f9
  *
  * @author ingimar
  */
-@WebServlet(name = "SimpleProxyJersey", urlPatterns = {"/SimpleProxyJersey"})
-public class SimpleProxyJersey extends HttpServlet {
+@WebServlet(name = "SimpleProxyWithTags", urlPatterns = {"/SimpleProxyWithTags"})
+public class SimpleProxyWithTags extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        // 'name', exempelvis skata - hämtar extuuid från TaxMock
-        String argName = request.getParameter("name");
+
+        String argName = request.getParameter("name"); // 'name', exempelvis skata - hämtar extuuid från TaxMock
+        String argTags = request.getParameter("tags");
+        System.out.println("tags from form -> " + argTags);
         String externalUUID = getExternalUUIDFromMockTaxonService(argName);
-        String mediaService = "http://localhost:8080/MediaServerResteasy/media/determination/stream/"+externalUUID;
-        System.out.println("mediaserverURL :"+mediaService);
+        System.out.println("externalUUID "+externalUUID);
+        String mediaService = "http://localhost:8080/MediaServerResteasy/media/determination/stream/" + externalUUID+"/"+argTags;
+        System.out.println("mediaserverURL :" + mediaService);
         response.sendRedirect(mediaService);
 
     }
 
     private String getExternalUUIDFromMockTaxonService(String name) throws IOException {
         System.out.println("Running on Lenovo -> " + name + " <-, calling restful on HP");
-//        final String uri = "http://172.16.23.12:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
         final String uri = "http://localhost:8080/SimpleTaxonMock/webresources/mocktaxon/common/" + name;
-
+        System.out.println("Restful-URI "+uri);
         Client client = Client.create();
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.accept("application/xml")
@@ -57,7 +59,7 @@ public class SimpleProxyJersey extends HttpServlet {
 
         return extUUID;
     }
-   
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
