@@ -42,7 +42,8 @@ public class SimpleProxyWithTags extends HttpServlet {
 
     private String getExternalUUIDFromMockTaxonService(String name) throws IOException {
         System.out.println("Running on Lenovo -> " + name + " <-, calling restful on HP");
-        final String uri = "http://localhost:8080/SimpleTaxonMock/webresources/mocktaxon/common/" + name;
+//        final String uri = "http://localhost:8080/SimpleTaxonMock/webresources/mocktaxon/common/" + name;
+        String uri = ServiceMockTaxonomyURL.uriToCommon.concat(name);
         System.out.println("Restful-URI "+uri);
         Client client = Client.create();
         WebResource webResource = client.resource(uri);

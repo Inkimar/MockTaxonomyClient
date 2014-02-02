@@ -40,8 +40,9 @@ public class SimpleProxyJersey extends HttpServlet {
     private String getExternalUUIDFromMockTaxonService(String name) throws IOException {
         System.out.println("Running on Lenovo -> " + name + " <-, calling restful on HP");
 //        final String uri = "http://172.16.23.12:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
-        final String uri = "http://localhost:8080/SimpleTaxonMock/webresources/mocktaxon/common/" + name;
+//        final String uri = "http://localhost:8080/SimpleTaxonMock/webresources/mocktaxon/common/" + name;
 
+        String uri = ServiceMockTaxonomyURL.uriToCommon.concat(name);
         Client client = Client.create();
         WebResource webResource = client.resource(uri);
         ClientResponse response = webResource.accept("application/xml")

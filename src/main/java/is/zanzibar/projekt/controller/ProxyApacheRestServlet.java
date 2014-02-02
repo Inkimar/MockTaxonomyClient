@@ -47,8 +47,8 @@ public class ProxyApacheRestServlet extends HttpServlet {
     }
 
     private String getFromRestfulService(String name) throws IOException {
-        final String uri = "http://172.16.23.12:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
-        
+//        final String uri = "http://172.16.23.12:8080/MockTaxonomy/webresources/mocktaxon/common/" + name;
+        String uri = ServiceMockTaxonomyURL.uriToCommon.concat(name);
         DefaultHttpClient httpClient = new DefaultHttpClient();
         HttpGet getRequest = new HttpGet(uri);
         getRequest.addHeader("accept", "application/xml");
